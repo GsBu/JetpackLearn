@@ -1,4 +1,4 @@
-package com.jobs.android.jetpacklearn.Fragment;
+package com.jobs.android.jetpacklearn.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +17,10 @@ import com.jobs.android.jetpacklearn.viewmodel.MyViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TwoFragment#newInstance} factory method to
+ * Use the {@link OneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TwoFragment extends Fragment {
+public class OneFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +31,7 @@ public class TwoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TwoFragment() {
+    public OneFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class TwoFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TwoFragment.
+     * @return A new instance of fragment OneFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TwoFragment newInstance(String param1, String param2) {
-        TwoFragment fragment = new TwoFragment();
+    public static OneFragment newInstance(String param1, String param2) {
+        OneFragment fragment = new OneFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,14 +66,14 @@ public class TwoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        View view = inflater.inflate(R.layout.fragment_one, container, false);
         SeekBar seekBar = view.findViewById(R.id.seekBar);
         MyViewModel myViewModel = ViewModelProviders.of(getActivity()).get(MyViewModel.class);
         MutableLiveData<Integer> liveData = myViewModel.getProgress();
         liveData.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                Log.e("aaaa","two 监听到变化 "+integer);
+                Log.e("aaaa","one 监听到变化 "+integer);
                 seekBar.setProgress(integer);
             }
         });
@@ -81,7 +81,7 @@ public class TwoFragment extends Fragment {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.e("aaaa","two onProgressChanged "+progress);
+                Log.e("aaaa","one onProgressChanged "+progress);
                 liveData.setValue(progress);
             }
 

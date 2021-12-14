@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
     <fragment
         android:id="@+id/fragmentOne"
-        android:name="com.jobs.android.jetpacklearn.Fragment.OneFragment"
+        android:name="com.jobs.android.jetpacklearn.fragment.OneFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
@@ -17,10 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000"/>
-
+    <Button
+        android:id="@+id/bt_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add Data"/>
+    <Button
+        android:id="@+id/bt_query"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="query Data"/>
     <fragment
         android:id="@+id/fragmentTwo"
-        android:name="com.jobs.android.jetpacklearn.Fragment.TwoFragment"
+        android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
