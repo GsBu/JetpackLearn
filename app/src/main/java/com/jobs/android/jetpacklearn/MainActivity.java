@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
+import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.User;
 import com.jobs.android.jetpacklearn.room.UserDatabase;
 
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 1. 创建被观察者 & 生产事件
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                User user = new User();
+                User user = new User(18, "浦东");
                 user.setName("111");
-                user.setAge(18);
+                Company company = new Company("腾讯", 11, "漕河泾开发区", 30000);
+                user.setCompany(company);
                 UserDatabase.getInstance(MainActivity.this).getUserDao().insert(user);
             }
         }).subscribeOn(Schedulers.io())
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "对Error事件作出响应");
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -89,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .getUserDao()
                         .getAllUsers();
                 for (User user1: allUsers){
-                    Log.e(TAG, user1.getName());
+                    Log.e(TAG, "姓名：" + user1.getName() + " 公司名：" +
+                            (user1.getCompany() == null ? "公司为空" : user1.getCompany().getName()));
                     emitter.onNext(user1.getId());
                 }
             }
@@ -112,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "对Error事件作出响应");
+                        e.printStackTrace();
                     }
 
                     @Override
