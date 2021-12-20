@@ -23,6 +23,9 @@ public abstract class UserDao {
     @Query("SELECT * FROM user")
     public abstract List<User> getAllUsers();
 
+    @Query("SELECT name, age FROM user")
+    public abstract List<UserAgeBean> getAllUsersAge();
+
     @Query("SELECT * FROM user WHERE age = :age")
     public abstract List<User> getUsersByAge(int age);
 

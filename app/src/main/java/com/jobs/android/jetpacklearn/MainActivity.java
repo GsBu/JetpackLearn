@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.User;
+import com.jobs.android.jetpacklearn.room.UserAgeBean;
 import com.jobs.android.jetpacklearn.room.UserDatabase;
 
 import java.util.List;
@@ -87,14 +88,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 1. 创建被观察者 & 生产事件
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                List<User> allUsers = UserDatabase
+                List<UserAgeBean> allUsers = UserDatabase
                         .getInstance(MainActivity.this)
                         .getUserDao()
-                        .getAllUsers();
-                for (User user1: allUsers){
-                    Log.e(TAG, "姓名：" + user1.getName() + " 公司名：" +
-                            (user1.getCompany() == null ? "公司为空" : user1.getCompany().getName()));
-                    emitter.onNext(user1.getId());
+                        .getAllUsersAge();
+                for (UserAgeBean user1: allUsers){
+                    Log.e(TAG, "姓名：" + user1.getName() + " 年龄：" + user1.getAge());
+                    emitter.onNext(user1.getAge());
                 }
             }
         }).subscribeOn(Schedulers.io())
