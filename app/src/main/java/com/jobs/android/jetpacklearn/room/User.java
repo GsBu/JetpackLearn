@@ -21,10 +21,6 @@ public class User {
     @ColumnInfo(name = "wife_name")
     public String wifeName;
 
-    public User(){
-
-    }
-
     public User(int age, String address){
         this.age = age;
         this.address = address;

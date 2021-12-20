@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomDatabase;
 import androidx.room.Update;
 
 import java.util.List;
@@ -15,19 +16,22 @@ import java.util.List;
  * 描述
  */
 @Dao
-public interface UserDao {
+public abstract class UserDao {
+    public UserDao(RoomDatabase roomDatabase) {
+    }
+
     @Query("SELECT * FROM user")
-    List<User> getAllUsers();
+    public abstract List<User> getAllUsers();
 
     @Query("SELECT * FROM user WHERE age = :age")
-    List<User> getUsersByAge(int age);
+    public abstract List<User> getUsersByAge(int age);
 
     @Insert
-    void insert(User... users);
+    public abstract void insert(User... users);
 
     @Update
-    void update(User... users);
+    public abstract void update(User... users);
 
     @Delete
-    void delete(User... users);
+    public abstract void delete(User... users);
 }
