@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .getUserDao()
                         .getAllUsersAge();
                 for (UserAgeBean user1: allUsers){
-                    Log.e(TAG, "姓名：" + user1.getName() + " 年龄：" + user1.getAge());
+                    Log.e(TAG, "姓名：" + user1.getName() + " 年龄为：" + user1.getAge());
                     emitter.onNext(user1.getAge());
                 }
             }
