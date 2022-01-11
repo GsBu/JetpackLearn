@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
 import com.jobs.android.jetpacklearn.room.Company;
+import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
-import com.jobs.android.jetpacklearn.room.UserAgeBean;
+import com.jobs.android.jetpacklearn.room.UserAndLibrary;
 import com.jobs.android.jetpacklearn.room.UserDatabase;
+import com.jobs.android.jetpacklearn.room.UserInfoBean;
 
 import java.util.List;
 
@@ -46,11 +48,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 1. 创建被观察者 & 生产事件
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                User user = new User(18, "浦东");
-                user.setName("111");
+                User user = new User();
+                UserInfoBean userInfoBean = new UserInfoBean();
+                userInfoBean.setName("姓名1");
+                userInfoBean.setAge(17);
+                userInfoBean.setSex(1);
+                user.setUserInfoBean(userInfoBean);
                 Company company = new Company("腾讯", 11, "漕河泾开发区", 30000);
                 user.setCompany(company);
                 UserDatabase.getInstance(MainActivity.this).getUserDao().insert(user);
+
+                Library library = new Library();
+                library.name="ceshi";
+                library.userId=1;
+                UserDatabase.getInstance(MainActivity.this).getUserDao().insert(library);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,13 +99,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 1. 创建被观察者 & 生产事件
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                List<UserAgeBean> allUsers = UserDatabase
+                List<UserInfoBean> allUsers = UserDatabase
                         .getInstance(MainActivity.this)
                         .getUserDao()
                         .getAllUsersAge();
-                for (UserAgeBean user1: allUsers){
+                for (UserInfoBean user1: allUsers){
                     Log.e(TAG, "姓名：" + user1.getName() + " 年龄为：" + user1.getAge());
                     emitter.onNext(user1.getAge());
+                }
+
+                List<UserAndLibrary> userAndLibraryList = UserDatabase.getInstance(MainActivity.this)
+                        .getUserDao().getUsersAndLibraries();
+                for (UserAndLibrary userAndLibrary: userAndLibraryList){
+                    if(userAndLibrary.user == null){
+                        Log.e(TAG,"user是空");
+                    }else {
+                        Log.e(TAG, "user:" + userAndLibrary.user.toString());
+                    }
+                    if(userAndLibrary.library == null){
+                        Log.e(TAG,"library是空");
+                    }else {
+                        Log.e(TAG, "library:" + userAndLibrary.library.toString());
+                    }
                 }
             }
         }).subscribeOn(Schedulers.io())

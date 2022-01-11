@@ -6,9 +6,10 @@ package com.jobs.android.jetpacklearn.room;
  * 文件    JetpackLearn
  * 描述
  */
-public class UserAgeBean {
+public class UserInfoBean {
     private String name;
     private int age;
+    private int sex;
 
     public String getName() {
         return name;
@@ -24,5 +25,22 @@ public class UserAgeBean {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfoBean{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.RoomDatabase;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -23,14 +24,21 @@ public abstract class UserDao {
     @Query("SELECT * FROM user")
     public abstract List<User> getAllUsers();
 
-    @Query("SELECT name, age FROM user")
-    public abstract List<UserAgeBean> getAllUsersAge();
+    @Query("SELECT name, age , sex FROM user")
+    public abstract List<UserInfoBean> getAllUsersAge();
+
+    @Transaction
+    @Query("SELECT * FROM user")
+    public abstract List<UserAndLibrary> getUsersAndLibraries();
 
     @Query("SELECT * FROM user WHERE age = :age")
     public abstract List<User> getUsersByAge(int age);
 
     @Insert
     public abstract void insert(User... users);
+
+    @Insert
+    public abstract void insert(Library... users);
 
     @Update
     public abstract void update(User... users);

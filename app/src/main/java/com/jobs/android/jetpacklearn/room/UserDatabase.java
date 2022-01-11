@@ -16,7 +16,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * 文件    JetpackLearn
  * 描述
  */
-@Database(entities = {User.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Library.class}, version = 2, exportSchema = false)
 @TypeConverters(CompanyConverter.class)
 public abstract class UserDatabase extends RoomDatabase {
     private static final String DB_NAME = "UserDatabase.db";

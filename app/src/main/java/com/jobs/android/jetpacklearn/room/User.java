@@ -1,6 +1,7 @@
 package com.jobs.android.jetpacklearn.room;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,17 +15,14 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String name;
-    private int age;
+    @Embedded
+    private UserInfoBean userInfoBean;
+    @Embedded(prefix = "old")
+    private UserInfoBean userInfoBean2;
     private Company company;
     public String address;
     @ColumnInfo(name = "wife_name")
     public String wifeName;
-
-    public User(int age, String address){
-        this.age = age;
-        this.address = address;
-    }
 
     public int getId() {
         return id;
@@ -34,20 +32,20 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public UserInfoBean getUserInfoBean() {
+        return userInfoBean;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserInfoBean(UserInfoBean userInfoBean) {
+        this.userInfoBean = userInfoBean;
     }
 
-    public int getAge() {
-        return age;
+    public UserInfoBean getUserInfoBean2() {
+        return userInfoBean2;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setUserInfoBean2(UserInfoBean userInfoBean2) {
+        this.userInfoBean2 = userInfoBean2;
     }
 
     public Company getCompany() {
@@ -56,5 +54,17 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userInfoBean=" + (userInfoBean != null ?  userInfoBean.toString() : "") +
+                ", userInfoBean2=" + (userInfoBean2 != null ? userInfoBean2.toString() : "") +
+                ", company=" + company +
+                ", address='" + address + '\'' +
+                ", wifeName='" + wifeName + '\'' +
+                '}';
     }
 }
