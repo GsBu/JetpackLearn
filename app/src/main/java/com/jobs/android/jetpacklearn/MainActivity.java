@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
+import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("aaaa","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btAdd = findViewById(R.id.bt_add);
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
+        //Lifecycle
+        getLifecycle().addObserver(new MyLifecycleObserver());
     }
 
     private void addData() {
@@ -159,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onStart() {
+        Log.e("aaaa","onStart");
         isStart("onStart super前");
         isCreate("onStart super前");
         super.onStart();
@@ -167,9 +172,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        Log.e("aaaa","onResume");
         isStart("onResume super前");
         isCreate("onResume super前");
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e("aaaa","onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e("aaaa","onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e("aaaa","onDestroy");
+        super.onDestroy();
     }
 
     private void isStart(String tag) {
