@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
-import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
+import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserverAndOwner;
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
         //Lifecycle
-        getLifecycle().addObserver(new MyLifecycleObserver());
+        getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
     }
 
     private void addData() {
