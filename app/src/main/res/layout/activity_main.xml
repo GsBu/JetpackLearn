@@ -28,6 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="query Data"/>
+    <Button
+        android:id="@+id/bt_data_binding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data Binding"/>
     <fragment
         android:id="@+id/fragmentTwo"
         android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"

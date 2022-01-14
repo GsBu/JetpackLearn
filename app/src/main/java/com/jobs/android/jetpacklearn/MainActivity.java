@@ -1,5 +1,6 @@
 package com.jobs.android.jetpacklearn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
+import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SeekBar seekBar;
-    private Button bt1, btAdd, btQuery;
+    private Button bt1, btAdd, btQuery, btDataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         btAdd = findViewById(R.id.bt_add);
         btQuery = findViewById(R.id.bt_query);
+        btDataBinding = findViewById(R.id.bt_data_binding);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
+        btDataBinding.setOnClickListener(this);
     }
 
     private void addData() {
@@ -192,6 +196,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_query:
                 queryData();
+                break;
+            case R.id.bt_data_binding:
+                Intent intent = new Intent(MainActivity.this, DataBindingActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
