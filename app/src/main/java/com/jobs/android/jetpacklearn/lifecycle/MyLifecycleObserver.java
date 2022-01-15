@@ -32,14 +32,14 @@ public class MyLifecycleObserver implements LifecycleObserver {
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_RESUME)
-    public void init2(){
+    public void init2(LifecycleOwner owner){
         Log.e("aaaa","ON_RESUME被调用");
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_ANY)
-    public void bbb(LifecycleOwner owner){
+    public void bbb(LifecycleOwner owner, Lifecycle.Event event){
         Log.e("aaaa","任何时候都执行 是否已经start了：" +
-                owner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED));
+                owner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)+" event="+event.name());
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
