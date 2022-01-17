@@ -37,9 +37,10 @@ public class MyLifecycleObserver implements LifecycleObserver {
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_ANY)
-    public void sonAny(LifecycleOwner owner){
+    public void sonAny(LifecycleOwner owner, Lifecycle.Event event){
         Log.e("aaaa","sonAny任何时候都执行 是否已经start了：" +
-                owner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED));
+                owner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED) +
+                " event = " + event.name());
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
