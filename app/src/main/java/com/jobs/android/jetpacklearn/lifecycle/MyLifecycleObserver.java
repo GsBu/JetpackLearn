@@ -22,38 +22,38 @@ public class MyLifecycleObserver implements LifecycleObserver {
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_CREATE)
-    public void init(){
-        Log.e("aaaa","ON_CREATE被调用，执行初始化");
+    public void sonCreate(){
+        Log.e("aaaa","sonCreate被调用");
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_START)
-    public void init1(){
-        Log.e("aaaa","ON_START被调用");
+    public void sonStart(){
+        Log.e("aaaa","sonStart被调用");
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_RESUME)
-    public void init2(){
-        Log.e("aaaa","ON_RESUME被调用");
+    public void sonResume(){
+        Log.e("aaaa","sonResume被调用");
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_ANY)
-    public void bbb(LifecycleOwner owner){
-        Log.e("aaaa","任何时候都执行 是否已经start了：" +
+    public void sonAny(LifecycleOwner owner){
+        Log.e("aaaa","sonAny任何时候都执行 是否已经start了：" +
                 owner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED));
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    public void a(){
-        Log.e("aaaa","ON_PAUSE被调用");
+    public void sonPause(){
+        Log.e("aaaa","sonPause被调用");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    public void aa(){
-        Log.e("aaaa","ON_STOP被调用");
+    public void sonStop(){
+        Log.e("aaaa","sonStop被调用");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void aaa(){
-        Log.e("aaaa","ON_DESTROY被调用");
+    public void sonDestroy(){
+        Log.e("aaaa","sonDestroy被调用");
     }
 }
