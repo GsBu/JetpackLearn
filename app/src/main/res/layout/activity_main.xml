@@ -7,12 +7,12 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <fragment
+    <!--<fragment
         android:id="@+id/fragmentOne"
         android:name="com.jobs.android.jetpacklearn.fragment.OneFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"/>-->
 
     <View
         android:layout_width="match_parent"
@@ -38,10 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="添加LifecycleObserver"/>
-    <fragment
+    <!--<fragment
         android:id="@+id/fragmentTwo"
         android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"/>-->
 </LinearLayout>

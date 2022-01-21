@@ -23,26 +23,26 @@ public class MyLifecycleObserverAndOwner implements LifecycleObserver, Lifecycle
     private LifecycleRegistry mLifecycleRegistry;
 
     public MyLifecycleObserverAndOwner(){
-        mLifecycleRegistry = new LifecycleRegistry(this);
-        getLifecycle().addObserver(new MyLifecycleObserver());
+        //mLifecycleRegistry = new LifecycleRegistry(this);
+        //getLifecycle().addObserver(new MyLifecycleObserver());
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_CREATE)
     public void myCreate(){
         Log.e("aaaa","myCreate被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+        //mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_START)
     public void myStart(){
         Log.e("aaaa","myStart被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
+        //mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_RESUME)
     public void myResume(LifecycleOwner owner){
         Log.e("aaaa","myResume被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
+        //.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_ANY)
@@ -57,19 +57,19 @@ public class MyLifecycleObserverAndOwner implements LifecycleObserver, Lifecycle
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void myPause(){
         Log.e("aaaa","myPause被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);
+        //mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void myStop(){
         Log.e("aaaa","myStop被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
+        //mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void myDestroy(){
         Log.e("aaaa","myDestroy被调用");
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+        //.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
     }
 
     @NonNull
