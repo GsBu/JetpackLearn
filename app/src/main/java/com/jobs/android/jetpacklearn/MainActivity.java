@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle;
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserverAndOwner;
+import com.jobs.android.jetpacklearn.livedata.LiveDataTestActivity;
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SeekBar seekBar;
-    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver;
+    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btQuery = findViewById(R.id.bt_query);
         btDataBinding = findViewById(R.id.bt_data_binding);
         btAddObserver = findViewById(R.id.bt_add_observer);
+        btLiveData = findViewById(R.id.bt_live_data);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
         btAddObserver.setOnClickListener(this);
+        btLiveData.setOnClickListener(this);
         //Lifecycle
         getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
     }
@@ -217,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()){
             case R.id.bt_add:
                 addData();
@@ -225,11 +229,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 queryData();
                 break;
             case R.id.bt_data_binding:
-                Intent intent = new Intent(MainActivity.this, DataBindingActivity.class);
+                intent = new Intent(MainActivity.this, DataBindingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_add_observer:
                 getLifecycle().addObserver(new MyLifecycleObserver());
+                break;
+            case R.id.bt_live_data:
+                intent = new Intent(MainActivity.this, LiveDataTestActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
