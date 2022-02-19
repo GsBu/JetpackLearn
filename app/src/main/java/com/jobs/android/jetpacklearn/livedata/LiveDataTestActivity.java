@@ -26,7 +26,15 @@ public class LiveDataTestActivity extends AppCompatActivity {
                 Log.e(TAG, "onChanged：" + s);
             }
         });
+        //观察者会被视为始终处于活跃状态
+        /*mLiveData.observeForever(new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.e(TAG, "onChanged：" + s);
+            }
+        });*/
         Log.e(TAG, "onCreate");
+        //activity是非活跃状态，不会回调onChanged。变为活跃时，value被onStart中的value覆盖
         mLiveData.setValue("onCreate");
     }
 
@@ -34,6 +42,7 @@ public class LiveDataTestActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "onStart");
+        //活跃状态，会回调onChanged。并且value会覆盖onCreate、onStop中设置的value
         mLiveData.setValue("onStart");
     }
 
@@ -41,6 +50,7 @@ public class LiveDataTestActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
+        //活跃状态，回调onChanged
         mLiveData.setValue("onResume");
     }
 
@@ -48,6 +58,7 @@ public class LiveDataTestActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.e(TAG, "onPause");
+        //活跃状态，回调onChanged
         mLiveData.setValue("onPause");
     }
 
@@ -55,6 +66,7 @@ public class LiveDataTestActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.e(TAG, "onStop");
+        //非活跃状态，不会回调onChanged。后面变为活跃时，value被onStart中的value覆盖
         mLiveData.setValue("onStop");
     }
 
@@ -62,6 +74,7 @@ public class LiveDataTestActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
+        //非活跃状态，且此时Observer已被移除，不会回调onChanged
         mLiveData.setValue("onDestroy");
     }
 }
