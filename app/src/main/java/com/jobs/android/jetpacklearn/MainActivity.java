@@ -20,6 +20,7 @@ import com.jobs.android.jetpacklearn.room.User;
 import com.jobs.android.jetpacklearn.room.UserAndLibrary;
 import com.jobs.android.jetpacklearn.room.UserDatabase;
 import com.jobs.android.jetpacklearn.room.UserInfoBean;
+import com.jobs.android.jetpacklearn.viewmodel.ViewModelActivity;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SeekBar seekBar;
-    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData;
+    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btDataBinding = findViewById(R.id.bt_data_binding);
         btAddObserver = findViewById(R.id.bt_add_observer);
         btLiveData = findViewById(R.id.bt_live_data);
+        btViewModel = findViewById(R.id.bt_view_model);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
         btAddObserver.setOnClickListener(this);
         btLiveData.setOnClickListener(this);
+        btViewModel.setOnClickListener(this);
         //Lifecycle
         getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
     }
@@ -237,6 +240,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_live_data:
                 intent = new Intent(MainActivity.this, LiveDataTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_view_model:
+                intent = new Intent(MainActivity.this, ViewModelActivity.class);
                 startActivity(intent);
                 break;
             default:
