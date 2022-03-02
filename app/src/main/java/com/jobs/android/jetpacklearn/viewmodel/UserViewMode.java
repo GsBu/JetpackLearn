@@ -35,7 +35,7 @@ public class UserViewMode extends ViewModel {
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
-                String userName = "今天吴建锋离职了";
+                String userName = "今天2022-02-21吴建锋离职了";
                 return userName;
             }
 

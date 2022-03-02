@@ -98,7 +98,12 @@ public class LiveDataTestActivity extends AppCompatActivity {
         super.onResume();
         Log.e(TAG, "onResume");
         //活跃状态，回调onChanged
-        mLiveData.setValue("onResume");
+        mLiveData.setValue("onResume1");
+        mLiveData.setValue("onResume2");
+        mLiveData.setValue("onResume2");
+        mLiveData.setValue("onResume2");
+        mLiveData.setValue("onResume3");
+        mLiveData.setValue("onResume3");
     }
 
     @Override
