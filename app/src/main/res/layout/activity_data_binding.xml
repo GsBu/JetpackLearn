@@ -41,6 +41,14 @@
             android:text="设置数据"/>
 
         <Button
+            android:id="@+id/bt_dai_ma_set_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{OnClickListener}"
+            android:text="代码设置数据"/>
+
+        <Button
             android:id="@+id/bt_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

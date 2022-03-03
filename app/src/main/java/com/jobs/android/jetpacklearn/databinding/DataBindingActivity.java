@@ -33,6 +33,9 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
                 //mBinding.tvTitle.setText("设置了新数据");
                 mBinding.setUserName("设置了新数据，看看能否自动更新");
                 break;
+            case R.id.bt_dai_ma_set_data:
+                mBinding.tvTitle.setText("代码设置数据");
+                break;
             default:
                 break;
         }
