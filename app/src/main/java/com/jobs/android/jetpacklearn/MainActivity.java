@@ -22,6 +22,12 @@ import com.jobs.android.jetpacklearn.room.UserDatabase;
 import com.jobs.android.jetpacklearn.room.UserInfoBean;
 import com.jobs.android.jetpacklearn.viewmodel.ViewModelActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -57,6 +63,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btViewModel.setOnClickListener(this);
         //Lifecycle
         getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
+
+        JSONObject jsonObject = new JSONObject();
+
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(1);
+        arrayList.add(2);
+        arrayList.add(3);
+        arrayList.add(4);
+        arrayList.add(5);
+
+        JSONArray jsonArray = new JSONArray();
+        Iterator<Integer> iterator = arrayList.iterator();
+        while (iterator.hasNext()){
+            jsonArray.put(iterator.next());
+        }
+
+
+        jsonArray.put(1);
+        jsonArray.put(2);
+        jsonArray.put(3);
+        jsonArray.put(4);
+        jsonArray.put(5);
+
+        try {
+            jsonObject.put("a", jsonArray);
+            Log.e("TAG", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addData() {
