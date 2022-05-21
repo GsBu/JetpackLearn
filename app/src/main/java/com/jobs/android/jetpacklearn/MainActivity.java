@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
+import com.jobs.android.jetpacklearn.leak.LeakActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserverAndOwner;
 import com.jobs.android.jetpacklearn.livedata.LiveDataTestActivity;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SeekBar seekBar;
-    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel;
+    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel, btLeak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btAddObserver = findViewById(R.id.bt_add_observer);
         btLiveData = findViewById(R.id.bt_live_data);
         btViewModel = findViewById(R.id.bt_view_model);
+        btLeak = findViewById(R.id.bt_leak);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
         btAddObserver.setOnClickListener(this);
         btLiveData.setOnClickListener(this);
         btViewModel.setOnClickListener(this);
+        btLeak.setOnClickListener(this);
         //Lifecycle
         getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
 
@@ -279,6 +282,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_view_model:
                 intent = new Intent(MainActivity.this, ViewModelActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_leak:
+                intent = new Intent(MainActivity.this, LeakActivity.class);
                 startActivity(intent);
                 break;
             default:

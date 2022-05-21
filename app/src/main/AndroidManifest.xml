@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackLearn">
-        <activity android:name=".viewmodel.ViewModelActivity"></activity>
+        <activity android:name=".leak.LeakActivity" />
+        <activity android:name=".viewmodel.ViewModelActivity" />
         <activity android:name=".livedata.LiveDataTestActivity" />
         <activity android:name=".databinding.DataBindingActivity" />
         <activity android:name=".MainActivity">

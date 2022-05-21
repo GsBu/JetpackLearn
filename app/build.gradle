@@ -57,4 +57,5 @@ dependencies {
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     //--------- Room
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
