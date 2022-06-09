@@ -9,6 +9,9 @@ import androidx.databinding.DataBindingUtil;
 import com.jobs.android.jetpacklearn.R;
 import com.jobs.android.jetpacklearn.databinding.bean.UserBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataBindingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityDataBindingBinding mBinding;
@@ -16,7 +19,7 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data_binding);
+        //setContentView(R.layout.activity_data_binding);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_data_binding);
         mBinding.setUserName("测试");
         mBinding.setOnClickListener(this);
@@ -24,6 +27,12 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         userBean.setName("Gs");
         userBean.setAge(29);
         mBinding.setUserBean1(userBean);
+
+        List<String> list = new ArrayList<>();
+        list.add("列表0");
+        list.add("列表1");
+        //这里不设置值也不会报错，xml中使用list[1]直接显示null
+        mBinding.setList(list);
     }
 
     @Override

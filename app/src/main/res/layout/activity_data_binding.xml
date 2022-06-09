@@ -4,6 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.util.List"/>
+
+        <!--泛型的支持会在编译时期报红线，需要通过转义字符才行，如：< 号用 &lt; 表示
+          > 号用 &gt; 表示-->
+        <variable
+            name="list"
+            type="List&lt;String&gt;" />
+        <variable
+            name="array"
+            type="int[]" />
         <variable
             name="userBean1"
             type="com.jobs.android.jetpacklearn.databinding.bean.UserBean" />
@@ -11,8 +21,11 @@
             name="onClickUtil"
             type="com.jobs.android.jetpacklearn.databinding.OnClickUtil" />
         <variable
-            name="userName"
+            name="UserName"
             type="String" />
+        <variable
+            name="age"
+            type="int" />
         <variable
             name="OnClickListener"
             type="android.view.View.OnClickListener" />
@@ -30,7 +43,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@{userName}" />
+            android:text="@{UserName}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{list[0]+list[1]+&quot; list大小：&quot;+list.size()+&quot;，数组：&quot;+array[0]}" />
 
         <Button
             android:id="@+id/bt_set_data"
