@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="java.util.List"/>
+        <import type="java.util.List" alias="List2"/>
 
         <!--泛型的支持会在编译时期报红线，需要通过转义字符才行，如：< 号用 &lt; 表示
           > 号用 &gt; 表示-->
         <variable
             name="list"
-            type="List&lt;String&gt;" />
+            type="List2&lt;String&gt;" />
         <variable
             name="array"
             type="int[]" />
