@@ -20,10 +20,15 @@ import java.util.List;
  * 文件    JetpackLearn
  * 描述
  */
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.UserHolder> {
+public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<UserBean> users;
     private LayoutInflater mLayoutInflater;
+
+    private enum SEX{
+        MAN,
+        WOMAN
+    }
 
     public MyAdapter(List list, Context context){
         users = list;
@@ -33,14 +38,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.UserHolder> {
 
     @NonNull
     @Override
-    public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new UserHolder(mLayoutInflater.inflate(R.layout.item_user, parent, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == SEX.MAN.ordinal()) {
+            return new UserHolder1(mLayoutInflater.inflate(R.layout.item_user, parent, false));
+        }else {
+            return new UserHolder2(mLayoutInflater.inflate(R.layout.item_user_2, parent, false));
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserHolder holder, int position) {
-        holder.tvName.setText(users.get(position).getName());
-        holder.tvAge.setText(users.get(position).getAge()+ "");
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof UserHolder1) {
+            ((UserHolder1)holder).tvName.setText(users.get(position).getName());
+            ((UserHolder1)holder).tvAge.setText(users.get(position).getAge() + "");
+        }else if(holder instanceof UserHolder2){
+            ((UserHolder2)holder).tvName.setText(users.get(position).getName());
+            ((UserHolder2)holder).tvAge.setText(users.get(position).getAge() + "");
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2 == 0 ? SEX.MAN.ordinal() : SEX.WOMAN.ordinal();
     }
 
     @Override
@@ -48,10 +67,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.UserHolder> {
         return users.size();
     }
 
-    public static class UserHolder extends RecyclerView.ViewHolder{
+    public static class UserHolder1 extends RecyclerView.ViewHolder{
         private TextView tvName, tvAge;
 
-        public UserHolder(@NonNull View itemView) {
+        public UserHolder1(@NonNull View itemView) {
+            super(itemView);
+
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvAge = itemView.findViewById(R.id.tv_age);
+        }
+    }
+
+    public static class UserHolder2 extends RecyclerView.ViewHolder{
+        private TextView tvName, tvAge;
+
+        public UserHolder2(@NonNull View itemView) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.tv_name);
