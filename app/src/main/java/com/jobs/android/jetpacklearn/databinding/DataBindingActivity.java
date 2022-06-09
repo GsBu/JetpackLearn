@@ -5,6 +5,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jobs.android.jetpacklearn.R;
 import com.jobs.android.jetpacklearn.databinding.bean.UserBean;
@@ -15,6 +17,9 @@ import java.util.List;
 public class DataBindingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityDataBindingBinding mBinding;
+    private RecyclerView recyclerView;
+
+    List<UserBean> userBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,19 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         list.add("列表1");
         //这里不设置值也不会报错，xml中使用list[1]直接显示null
         mBinding.setList(list);
+
+        UserBean userBean2 = new UserBean();
+        userBean2.setName("Xia");
+        userBean2.setAge(30);
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
+
+        mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.rvData.setAdapter(new MyAdapter(userBeanList, this));
     }
 
     @Override

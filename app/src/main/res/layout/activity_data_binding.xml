@@ -74,5 +74,10 @@
             android:layout_gravity="center"
             android:onClick="@{userBean1::displayUser}"
             android:text="调用方法"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>
