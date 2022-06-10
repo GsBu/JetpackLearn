@@ -19,7 +19,9 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
     private ActivityDataBindingBinding mBinding;
     private RecyclerView recyclerView;
 
-    List<UserBean> userBeanList = new ArrayList<>();
+    private int mCount = 0;
+    private MyAdapter myAdapter;
+    private List<UserBean> userBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +41,27 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         //这里不设置值也不会报错，xml中使用list[1]直接显示null
         mBinding.setList(list);
 
+        initData();
+        myAdapter = new MyAdapter(userBeanList, this);
+        mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.rvData.setAdapter(myAdapter);
+    }
+
+    private void initData(){
+        mCount++;
+        UserBean userBean = new UserBean();
+        userBean.setName("Gs" + mCount);
+        userBean.setAge(29);
         UserBean userBean2 = new UserBean();
         userBean2.setName("Xia");
         userBean2.setAge(30);
-        userBeanList.add(userBean);
-        userBeanList.add(userBean2);
-        userBeanList.add(userBean);
-        userBeanList.add(userBean2);
-        userBeanList.add(userBean);
-        userBeanList.add(userBean2);
 
-        mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.rvData.setAdapter(new MyAdapter(userBeanList, this));
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
+        userBeanList.add(userBean);
+        userBeanList.add(userBean2);
     }
 
     @Override
@@ -62,6 +73,11 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.bt_dai_ma_set_data:
                 mBinding.tvTitle.setText("代码设置数据");
+                break;
+            case R.id.bt_refresh:
+                userBeanList.clear();
+                initData();
+                myAdapter.notifyDataSetChanged();
                 break;
             default:
                 break;

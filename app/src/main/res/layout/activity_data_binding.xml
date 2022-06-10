@@ -74,7 +74,13 @@
             android:layout_gravity="center"
             android:onClick="@{userBean1::displayUser}"
             android:text="调用方法"/>
-
+        <Button
+            android:id="@+id/bt_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{OnClickListener}"
+            android:text="刷新"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data"
             android:layout_width="match_parent"

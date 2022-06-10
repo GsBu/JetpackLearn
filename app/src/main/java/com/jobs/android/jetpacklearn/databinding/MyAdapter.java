@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jobs.android.jetpacklearn.R;
@@ -40,7 +41,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == SEX.MAN.ordinal()) {
-            return new UserHolder1(mLayoutInflater.inflate(R.layout.item_user, parent, false));
+            ItemUserBinding binding = DataBindingUtil.inflate(mLayoutInflater, R.layout.item_user, parent, false);
+            return new UserHolder1(binding);
         }else {
             return new UserHolder2(mLayoutInflater.inflate(R.layout.item_user_2, parent, false));
         }
@@ -49,8 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof UserHolder1) {
-            ((UserHolder1)holder).tvName.setText(users.get(position).getName());
-            ((UserHolder1)holder).tvAge.setText(users.get(position).getAge() + "");
+            ((UserHolder1)holder).getBinding().setUser(users.get(position));
         }else if(holder instanceof UserHolder2){
             ((UserHolder2)holder).tvName.setText(users.get(position).getName());
             ((UserHolder2)holder).tvAge.setText(users.get(position).getAge() + "");
@@ -68,13 +69,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class UserHolder1 extends RecyclerView.ViewHolder{
-        private TextView tvName, tvAge;
+        private ItemUserBinding itemUserBinding;
 
-        public UserHolder1(@NonNull View itemView) {
-            super(itemView);
+        public UserHolder1(ItemUserBinding binding) {
+            super(binding.getRoot());
+            itemUserBinding = binding;
+        }
 
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvAge = itemView.findViewById(R.id.tv_age);
+        public ItemUserBinding getBinding(){
+            return itemUserBinding;
         }
     }
 
