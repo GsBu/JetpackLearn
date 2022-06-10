@@ -1,5 +1,6 @@
 package com.jobs.android.jetpacklearn.databinding;
 
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
@@ -13,9 +14,10 @@ import com.bumptech.glide.Glide;
  * 描述
  */
 public class BindingAdapterUtil {
-    @BindingAdapter({"imageUrl"})
-    public static void loadImage(ImageView imageView, String url){
+    @BindingAdapter({"imageUrl", "placeHolder"})
+    public static void loadImage(ImageView imageView, String url, Drawable place){
         Glide.with(imageView.getContext()).load(url)
+                .placeholder(place)
                 .into(imageView);
     }
 }

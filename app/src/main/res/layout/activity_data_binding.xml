@@ -5,6 +5,7 @@
 
     <data>
         <import type="java.util.List" alias="List2"/>
+        <import type="android.graphics.drawable.Drawable"/>
 
         <!--泛型的支持会在编译时期报红线，需要通过转义字符才行，如：< 号用 &lt; 表示
           > 号用 &gt; 表示-->
@@ -23,6 +24,9 @@
         <variable
             name="UserName"
             type="String" />
+        <variable
+            name="place"
+            type="Drawable" />
         <variable
             name="url"
             type="String" />
@@ -88,7 +92,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            app:imageUrl="@{url}"/>
+            app:imageUrl="@{url}"
+            app:placeHolder="@{place}"/>
         <Button
             android:id="@+id/bt_refresh"
             android:layout_width="wrap_content"

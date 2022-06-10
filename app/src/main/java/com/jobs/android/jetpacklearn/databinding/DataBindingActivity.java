@@ -1,5 +1,6 @@
 package com.jobs.android.jetpacklearn.databinding;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -45,6 +46,9 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         myAdapter = new MyAdapter(userBeanList, this);
         mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rvData.setAdapter(myAdapter);
+
+        Drawable drawable = DataBindingActivity.this.getDrawable(R.mipmap.ic_launcher);
+        mBinding.setPlace(drawable);
     }
 
     private void initData(){
