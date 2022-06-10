@@ -24,6 +24,9 @@
             name="UserName"
             type="String" />
         <variable
+            name="url"
+            type="String" />
+        <variable
             name="age"
             type="int" />
         <variable
@@ -74,6 +77,18 @@
             android:layout_gravity="center"
             android:onClick="@{userBean1::displayUser}"
             android:text="调用方法"/>
+        <Button
+            android:id="@+id/bt_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{OnClickListener}"
+            android:text="设置图片"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:imageUrl="@{url}"/>
         <Button
             android:id="@+id/bt_refresh"
             android:layout_width="wrap_content"

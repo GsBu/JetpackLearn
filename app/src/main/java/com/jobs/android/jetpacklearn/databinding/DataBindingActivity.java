@@ -74,6 +74,9 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
             case R.id.bt_dai_ma_set_data:
                 mBinding.tvTitle.setText("代码设置数据");
                 break;
+            case R.id.bt_image:
+                mBinding.setUrl("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp09%2F210F2130512J47-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657440287&t=b5bed68986cce5cc5368a7ecea06668a");
+                break;
             case R.id.bt_refresh:
                 userBeanList.clear();
                 initData();
