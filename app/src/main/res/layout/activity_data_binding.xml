@@ -19,6 +19,9 @@
             name="userBean1"
             type="com.jobs.android.jetpacklearn.databinding.bean.UserBean" />
         <variable
+            name="userBean2"
+            type="com.jobs.android.jetpacklearn.databinding.bean.UserBean2" />
+        <variable
             name="onClickUtil"
             type="com.jobs.android.jetpacklearn.databinding.OnClickUtil" />
         <variable
@@ -88,6 +91,13 @@
             android:layout_gravity="center"
             android:onClick="@{onClickListener}"
             android:text="@{userBean1.name}"/>
+        <Button
+            android:id="@+id/bt_object_change_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{onClickListener}"
+            android:text="@{userBean2.name}"/>
         <Button
             android:id="@+id/bt_image"
             android:layout_width="wrap_content"

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jobs.android.jetpacklearn.R;
 import com.jobs.android.jetpacklearn.databinding.bean.UserBean;
+import com.jobs.android.jetpacklearn.databinding.bean.UserBean2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,8 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
     private MyAdapter myAdapter;
     private List<UserBean> userBeanList = new ArrayList<>();
     private List<String> list;
-    private  UserBean userBean;
+    private  UserBean userBean1;
+    private UserBean2 userBean2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,13 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         mBinding.setName("测试");
         mBinding.setOnClickListener(this);
 
-        userBean = new UserBean();
-        userBean.setName("Gs");
-        userBean.setAge(29);
-        mBinding.setUserBean1(userBean);
+        userBean1 = new UserBean();
+        userBean1.setName("Gs");
+        userBean1.setAge(30);
+        mBinding.setUserBean1(userBean1);
+
+        userBean2 = new UserBean2();
+        mBinding.setUserBean2(userBean2);
 
         list = new ArrayList<>();
         list.add("列表0");
@@ -58,7 +63,7 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         mCount++;
         UserBean userBean = new UserBean();
         userBean.setName("Gs" + mCount);
-        userBean.setAge(29);
+        userBean.setAge(30);
         UserBean userBean2 = new UserBean();
         userBean2.setName("Xia");
         userBean2.setAge(30);
@@ -84,7 +89,11 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
                 mBinding.tvTitle.setText("代码设置数据");
                 break;
             case R.id.bt_object_change:
-                userBean.setName("改变对象的值");
+                userBean1.setName("改变对象的值");
+                //mBinding.setUserBean1(userBean);//改变userBean对象的值后，重新设置可以生效。
+                break;
+            case R.id.bt_object_change_2:
+                userBean2.name.set("ObservableFields");
                 //mBinding.setUserBean1(userBean);//改变userBean对象的值后，重新设置可以生效。
                 break;
             case R.id.bt_image:
