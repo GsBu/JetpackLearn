@@ -94,6 +94,7 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.bt_object_change_2:
                 userBean2.name.set("ObservableFields");
+                userBean2.list.set(0, "000");
                 //mBinding.setUserBean1(userBean);//改变userBean对象的值后，重新设置可以生效。
                 break;
             case R.id.bt_image:

@@ -1,5 +1,6 @@
 package com.jobs.android.jetpacklearn.databinding.bean;
 
+import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 
 /**
@@ -10,8 +11,10 @@ import androidx.databinding.ObservableField;
  */
 public class UserBean2 {
     public final ObservableField<String> name = new ObservableField();
+    public final ObservableArrayList<String> list = new ObservableArrayList<String>();
 
     {
         name.set("原始数据");
+        list.add(0, "0");
     }
 }
