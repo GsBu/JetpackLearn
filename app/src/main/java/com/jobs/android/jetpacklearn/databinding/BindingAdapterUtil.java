@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
  * 描述
  */
 public class BindingAdapterUtil {
+    //BindingAdapter可以设置多个属性，xml中必须全部使用这些属性，否则编译报错
     @BindingAdapter({"imageUrl", "placeHolder"})
     public static void loadImage(ImageView imageView, String url, Drawable place){
         Glide.with(imageView.getContext()).load(url)

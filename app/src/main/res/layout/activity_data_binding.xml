@@ -22,7 +22,7 @@
             name="onClickUtil"
             type="com.jobs.android.jetpacklearn.databinding.OnClickUtil" />
         <variable
-            name="UserName"
+            name="name"
             type="String" />
         <variable
             name="place"
@@ -34,7 +34,7 @@
             name="age"
             type="int" />
         <variable
-            name="OnClickListener"
+            name="onClickListener"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@{UserName}" />
+            android:text="@{name}" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{OnClickListener}"
+            android:onClick="@{onClickListener}"
             android:text="设置数据"/>
 
         <Button
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{OnClickListener}"
+            android:onClick="@{onClickListener}"
             android:text="代码设置数据"/>
 
         <Button
@@ -82,11 +82,18 @@
             android:onClick="@{userBean1::displayUser}"
             android:text="调用方法"/>
         <Button
+            android:id="@+id/bt_object_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{onClickListener}"
+            android:text="@{userBean1.name}"/>
+        <Button
             android:id="@+id/bt_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{OnClickListener}"
+            android:onClick="@{onClickListener}"
             android:text="设置图片"/>
         <ImageView
             android:layout_width="100dp"
@@ -99,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{OnClickListener}"
+            android:onClick="@{onClickListener}"
             android:text="刷新"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data"
