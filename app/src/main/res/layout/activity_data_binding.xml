@@ -82,8 +82,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="@{userBean1::displayUser}"
+            android:onClick="@{() -> userBean1.displayUser()}"
             android:text="调用方法"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@={userBean1.name}"/>
         <Button
             android:id="@+id/bt_object_change"
             android:layout_width="wrap_content"
@@ -91,6 +96,11 @@
             android:layout_gravity="center"
             android:onClick="@{onClickListener}"
             android:text="@{userBean1.name}"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@={userBean2.name}"/>
         <Button
             android:id="@+id/bt_object_change_2"
             android:layout_width="wrap_content"

@@ -1,6 +1,5 @@
 package com.jobs.android.jetpacklearn.databinding.bean;
 
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.databinding.BaseObservable;
@@ -40,7 +39,16 @@ public class UserBean extends BaseObservable {
         this.age = age;
     }
 
-    public void displayUser(View view){
+    /**
+     * xml中通过android:onClick="@{userBean1.displayUser}"
+     * 或者android:onClick="@{userBean1::displayUser}"调用方法时，displayUser在定义时必须有View类型的参数。displayUser(View view)
+     * 因为onClick方法传递View类型的参数。
+     * android:onClick="@{() -> userBean1.displayUser()}"如此使用时，displayUser在定义时可以不用View类型的参数。
+     * 因为() -> userBean1.displayUser()是lambda表达式写法，
+     * 也可以写成：(view)->userBean1.displayUser(),前面(view)表示onClick方法的传递的参数，
+     * userBean1.displayUser()方法中不需要用到view参数，可以将view省略。
+     */
+    public void displayUser(){
         Toast.makeText(GsApplication.getContext(), "该用户的数据：" + toString(),Toast.LENGTH_SHORT).show();
     }
 
