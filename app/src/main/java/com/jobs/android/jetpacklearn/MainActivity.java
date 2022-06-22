@@ -2,10 +2,12 @@ package com.jobs.android.jetpacklearn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private SeekBar seekBar;
+    private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel, btLeak;
 
     @Override
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.e("aaaa","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tvFilePath = findViewById(R.id.tv_file_path);
         btAdd = findViewById(R.id.bt_add);
         btQuery = findViewById(R.id.bt_query);
         btDataBinding = findViewById(R.id.bt_data_binding);
@@ -64,6 +69,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btLiveData.setOnClickListener(this);
         btViewModel.setOnClickListener(this);
         btLeak.setOnClickListener(this);
+
+        StringBuffer stringBuffer = new StringBuffer();
+        // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
+        // 读写该路径下的文件不需要申请储存空间读写权限，且卸载应用时会自动删除。
+        //外部储存：/storage 或 /mnt 目录。一般我们使用getExternalStorageDirectory()方法获取的路径来存取文件。
+        //外部存储空间分为了三部分：
+        //1、特定目录（App-specific），使用getExternalFilesDir()或 getExternalCacheDir()方法访问。无需权限，且卸载应用时会自动删除。
+        //2、照片、视频、音频这类媒体文件。使用MediaStore 访问，访问其他应用的媒体文件时需要READ_EXTERNAL_STORAGE权限。
+        //3、其他目录，使用存储访问框架SAF（Storage Access Framwork）
+        stringBuffer.append("内部存储：\n").append(this.getFilesDir().getPath())
+                .append("\n").append(this.getCacheDir().getPath())
+                .append("\n外部存储：\n").append(this.getExternalFilesDir(null).getPath())
+                .append("\n").append(this.getExternalCacheDir().getPath())
+                .append("\n外部存储：").append(Environment.getExternalStorageDirectory().getPath());
+        tvFilePath.setText(stringBuffer);
         //Lifecycle
         getLifecycle().addObserver(new MyLifecycleObserverAndOwner());
 
