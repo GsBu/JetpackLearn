@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .append("\n").append(this.getCacheDir().getPath())
                 .append("\n外部存储：\n").append(this.getExternalFilesDir(null).getPath())
                 .append("\n").append(this.getExternalCacheDir().getPath())
+                .append("\n").append(this.getObbDir().getPath())//一般游戏 APP 会将游戏相关的数据包放到这个Obb目录下
                 .append("\n外部存储：").append(Environment.getExternalStorageDirectory().getPath());
         tvFilePath.setText(stringBuffer);
         //Lifecycle
