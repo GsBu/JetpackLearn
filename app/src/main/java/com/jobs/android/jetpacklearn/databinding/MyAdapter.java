@@ -2,8 +2,10 @@ package com.jobs.android.jetpacklearn.databinding;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,16 +27,18 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<UserBean> users;
     private LayoutInflater mLayoutInflater;
+    private ItemDragListener mItemDragListener;
 
     private enum SEX{
         MAN,
         WOMAN
     }
 
-    public MyAdapter(List list, Context context){
+    public MyAdapter(List list, Context context, ItemDragListener itemDragListener){
         users = list;
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
+        mItemDragListener = itemDragListener;
     }
 
     @NonNull
@@ -52,9 +56,23 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof UserHolder1) {
             ((UserHolder1)holder).getBinding().setUser(users.get(position));
+            ((UserHolder1)holder).getBinding().ivIcon.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    mItemDragListener.onStartDrags(holder);
+                    return false;
+                }
+            });
         }else if(holder instanceof UserHolder2){
             ((UserHolder2)holder).tvName.setText(users.get(position).getName());
             ((UserHolder2)holder).tvAge.setText(users.get(position).getAge() + "");
+            ((UserHolder2)holder).ivIcon.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    mItemDragListener.onStartDrags(holder);
+                    return false;
+                }
+            });
         }
     }
 
@@ -83,12 +101,14 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static class UserHolder2 extends RecyclerView.ViewHolder{
         private TextView tvName, tvAge;
+        private ImageView ivIcon;
 
         public UserHolder2(@NonNull View itemView) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.tv_name);
             tvAge = itemView.findViewById(R.id.tv_age);
+            ivIcon = itemView.findViewById(R.id.iv_icon);
         }
     }
 }

@@ -2,10 +2,13 @@ package com.jobs.android.jetpacklearn.databinding;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +19,7 @@ import com.jobs.android.jetpacklearn.databinding.bean.UserBean2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBindingActivity extends AppCompatActivity implements View.OnClickListener {
+public class DataBindingActivity extends AppCompatActivity implements View.OnClickListener, ItemDragListener {
 
     private ActivityDataBindingBinding mBinding;
     private RecyclerView recyclerView;
@@ -27,6 +30,7 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
     private List<String> list;
     private  UserBean userBean1;
     private UserBean2 userBean2;
+    private ItemTouchHelper itemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,15 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         mBinding.setList(list);
 
         initData();
-        myAdapter = new MyAdapter(userBeanList, this);
+        myAdapter = new MyAdapter(userBeanList, this, this);
         mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rvData.setAdapter(myAdapter);
 
         Drawable drawable = DataBindingActivity.this.getDrawable(R.mipmap.ic_launcher);
         mBinding.setPlace(drawable);
+
+        itemTouchHelper = new ItemTouchHelper(new MyItemTouchHelper());
+        itemTouchHelper.attachToRecyclerView(mBinding.rvData);
     }
 
     private void initData(){
@@ -108,6 +115,50 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onStartDrags(RecyclerView.ViewHolder viewHolder) {
+        itemTouchHelper.startDrag(viewHolder);
+    }
+
+    private static class MyItemTouchHelper extends ItemTouchHelper.Callback{
+
+        /**
+         * getMovementFlags()是用来判断RecyclerView上的哪些方向操作交由ItemTouchHelper.Callback控制
+         * @param recyclerView
+         * @param viewHolder
+         * @return
+         */
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            Log.e("aaaa","getMovementFlags");
+            // 如果你不想ItemTouchHelper处理上下拖动，可以将 dragFlags = 0
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            // 如果你不想ItemTouchHelper处理左右滑动，可以将 swipeFlags = 0
+            int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+            int result = makeMovementFlags(dragFlags, swipeFlags);
+            return result;
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            Log.e("aaaa","onMove");
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Log.e("aaaa","onSwiped direction="+direction);
+        }
+
+        /**
+         * 是否开启item长按拖拽功能
+         */
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return true;
         }
     }
 }
