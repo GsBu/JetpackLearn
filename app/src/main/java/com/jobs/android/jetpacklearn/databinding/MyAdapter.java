@@ -76,6 +76,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    public void onItemMove(int fromPosition, int toPosition) {
+        UserBean prev = users.remove(fromPosition);
+        users.add(toPosition > fromPosition ? toPosition - 1 : toPosition, prev);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
     @Override
     public int getItemViewType(int position) {
         return position % 2 == 0 ? SEX.MAN.ordinal() : SEX.WOMAN.ordinal();

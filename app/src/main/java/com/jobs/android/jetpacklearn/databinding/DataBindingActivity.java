@@ -58,6 +58,7 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         myAdapter = new MyAdapter(userBeanList, this, this);
         mBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rvData.setAdapter(myAdapter);
+        mBinding.rvData.addItemDecoration(new MyItemDecoration());
 
         Drawable drawable = DataBindingActivity.this.getDrawable(R.mipmap.ic_launcher);
         mBinding.setPlace(drawable);
@@ -145,6 +146,13 @@ public class DataBindingActivity extends AppCompatActivity implements View.OnCli
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             Log.e("aaaa","onMove");
+            if(recyclerView.getAdapter() instanceof MyAdapter) {
+                MyAdapter adapter = (MyAdapter) recyclerView.getAdapter();
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                adapter.onItemMove(fromPosition, toPosition);
+            }
             return false;
         }
 
