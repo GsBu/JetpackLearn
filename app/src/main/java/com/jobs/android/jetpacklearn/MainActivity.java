@@ -1,8 +1,12 @@
 package com.jobs.android.jetpacklearn;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +16,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
+import com.gs.android.IMyAidlInterface;
+import com.gs.android.aidlserver.MyAidlService;
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
 import com.jobs.android.jetpacklearn.leak.LeakActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
@@ -46,7 +52,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SeekBar seekBar;
     private TextView tvFilePath;
-    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel, btLeak;
+    private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel, btLeak, btRemote;
+
+    private IMyAidlInterface aidl;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e(TAG, "连接Service 成功");
+            //绑定服务成功回调
+            aidl = IMyAidlInterface.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //服务断开时回调
+            aidl = null;
+            Log.e(TAG, "连接Service失败");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btLiveData = findViewById(R.id.bt_live_data);
         btViewModel = findViewById(R.id.bt_view_model);
         btLeak = findViewById(R.id.bt_leak);
+        btRemote = findViewById(R.id.bt_remote);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -69,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btLiveData.setOnClickListener(this);
         btViewModel.setOnClickListener(this);
         btLeak.setOnClickListener(this);
+        btRemote.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -116,6 +141,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        startAndBindService();
+    }
+
+    private void startAndBindService(){
+        Log.e("aaaa","startAndBindService");
+        Intent intent = new Intent(MainActivity.this, MyAidlService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
     private void addData() {
@@ -308,6 +341,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_leak:
                 intent = new Intent(MainActivity.this, LeakActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.bt_remote:
+                try {
+                    int result = aidl.add(12, 13);
+                    Log.e(TAG, "远程回调结果:" + result);
+                } catch (Exception e) {
+                    Log.e("aaaa",e.getMessage());
+                }
                 break;
             default:
                 break;

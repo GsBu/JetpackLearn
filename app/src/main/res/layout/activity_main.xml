@@ -64,6 +64,12 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="内存泄漏"/>
+    <Button
+        android:id="@+id/bt_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="远程服务"/>
     <!--<fragment
         android:id="@+id/fragmentTwo"
         android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"

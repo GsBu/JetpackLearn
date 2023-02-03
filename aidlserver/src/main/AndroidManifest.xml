@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gs.android.aidlserver">
+
+    <application>
+        <service
+            android:name=".MyAidlService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="com.aaa"></service>
+    </application>
+
+</manifest>
