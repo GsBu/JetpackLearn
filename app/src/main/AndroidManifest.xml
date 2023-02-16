@@ -12,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackLearn">
+        <activity
+            android:name="com.jobs.android.jetpacklearn.server.StudentActivity"
+            android:exported="false" />
         <activity android:name=".leak.LeakActivity" />
         <activity android:name=".viewmodel.ViewModelActivity" />
         <activity android:name=".livedata.LiveDataTestActivity" />
@@ -23,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.jobs.android.jetpacklearn.server.StudentService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
     </application>
 
 </manifest>
