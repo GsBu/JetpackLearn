@@ -5,5 +5,5 @@ import com.jobs.android.jetpacklearn.Student;
 
 interface IStudentService {
     List<Student> getStudentList();
-    void addStudent(in Student student);
+    void addStudent(inout Student student);
 }

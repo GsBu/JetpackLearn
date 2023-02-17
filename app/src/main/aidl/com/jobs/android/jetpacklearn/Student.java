@@ -46,6 +46,11 @@ public class Student implements Parcelable {
         dest.writeString(name);
     }
 
+    public void readFromParcel(Parcel parcel) {
+        this.id = parcel.readInt();
+        this.name = parcel.readString();
+    }
+
     @Override
     public String toString() {
         return "Student{" +
