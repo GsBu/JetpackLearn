@@ -76,6 +76,12 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="学生远程服务"/>
+    <Button
+        android:id="@+id/bt_task_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="测试ActivityRecord、TaskRecord、ActivityStack关系"/>
     <!--<fragment
         android:id="@+id/fragmentTwo"
         android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"

@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackLearn">
         <activity
+            android:name="com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity"
+            android:exported="false"
+            android:taskAffinity=":aaaaa"/>
+        <activity
             android:name="com.jobs.android.jetpacklearn.server.StudentActivity"
             android:exported="false" />
         <activity android:name=".leak.LeakActivity" />
