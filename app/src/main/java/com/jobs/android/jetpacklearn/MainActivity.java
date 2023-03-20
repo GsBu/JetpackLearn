@@ -23,6 +23,7 @@ import com.jobs.android.jetpacklearn.leak.LeakActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserverAndOwner;
 import com.jobs.android.jetpacklearn.livedata.LiveDataTestActivity;
+import com.jobs.android.jetpacklearn.notification.NotificationActivity;
 import com.jobs.android.jetpacklearn.room.Company;
 import com.jobs.android.jetpacklearn.room.Library;
 import com.jobs.android.jetpacklearn.room.User;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar seekBar;
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
-            btLeak, btRemote, btRemoteStudent, btTaskRecord;
+            btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification;
 
     private IMyAidlInterface aidl;
     private ServiceConnection connection = new ServiceConnection() {
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btRemote = findViewById(R.id.bt_remote);
         btRemoteStudent = findViewById(R.id.bt_remote_student);
         btTaskRecord = findViewById(R.id.bt_task_record);
+        btNotification = findViewById(R.id.bt_notification);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btRemote.setOnClickListener(this);
         btRemoteStudent.setOnClickListener(this);
         btTaskRecord.setOnClickListener(this);
+        btNotification.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -364,6 +367,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_task_record:
                 intent = new Intent(MainActivity.this, TaskRecordActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+            case R.id.bt_notification:
+                intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
                 break;
             default:

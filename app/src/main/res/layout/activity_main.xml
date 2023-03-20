@@ -13,75 +13,90 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>-->
-
-    <View
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
-    <TextView
-        android:id="@+id/tv_file_path"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/bt_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="add Data"/>
-    <Button
-        android:id="@+id/bt_query"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="query Data"/>
-    <Button
-        android:id="@+id/bt_data_binding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Data Binding"/>
-    <Button
-        android:id="@+id/bt_add_observer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="添加LifecycleObserver"/>
-    <Button
-        android:id="@+id/bt_live_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="LiveData"/>
-    <Button
-        android:id="@+id/bt_view_model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="ViewModel"/>
-    <Button
-        android:id="@+id/bt_leak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="内存泄漏"/>
-    <Button
-        android:id="@+id/bt_remote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="远程服务"/>
-    <Button
-        android:id="@+id/bt_remote_student"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="学生远程服务"/>
-    <Button
-        android:id="@+id/bt_task_record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="测试ActivityRecord、TaskRecord、ActivityStack关系"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"/>
+            <TextView
+                android:id="@+id/tv_file_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/bt_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="add Data"/>
+            <Button
+                android:id="@+id/bt_query"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="query Data"/>
+            <Button
+                android:id="@+id/bt_data_binding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Data Binding"/>
+            <Button
+                android:id="@+id/bt_add_observer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="添加LifecycleObserver"/>
+            <Button
+                android:id="@+id/bt_live_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="LiveData"/>
+            <Button
+                android:id="@+id/bt_view_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="ViewModel"/>
+            <Button
+                android:id="@+id/bt_leak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="内存泄漏"/>
+            <Button
+                android:id="@+id/bt_remote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="远程服务"/>
+            <Button
+                android:id="@+id/bt_remote_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="学生远程服务"/>
+            <Button
+                android:id="@+id/bt_task_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="测试ActivityRecord、TaskRecord、ActivityStack关系"/>
+            <Button
+                android:id="@+id/bt_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="通知"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <!--<fragment
         android:id="@+id/fragmentTwo"
         android:name="com.jobs.android.jetpacklearn.fragment.TwoFragment"
