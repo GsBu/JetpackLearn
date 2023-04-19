@@ -46,7 +46,9 @@ public class ViewModelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userViewMode.getUserInfo();
-                userViewMode.getData().setValue("ViewModel配合LiveData使用");
+                UserBean userBean = new UserBean();
+                userBean.setName("ViewModel配合LiveData使用，LiveData泛型使用对象");
+                userViewMode.getData().setValue(userBean);
             }
         });
     }
