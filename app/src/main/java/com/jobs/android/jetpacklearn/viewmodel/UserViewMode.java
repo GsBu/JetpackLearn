@@ -17,6 +17,11 @@ import androidx.lifecycle.ViewModel;
 public class UserViewMode extends ViewModel {
     private MutableLiveData<String> userLiveData;
     private MutableLiveData<Boolean> loadingLiveData;
+    private MutableLiveData<String> nameLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<String> getData() {
+        return nameLiveData;
+    }
 
     public UserViewMode(){
         userLiveData = new MutableLiveData<>();
