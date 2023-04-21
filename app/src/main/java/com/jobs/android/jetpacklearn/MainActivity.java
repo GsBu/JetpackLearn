@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -153,6 +155,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         startAndBindService();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("aaaa", "在子线程中：" + Thread.currentThread());
+                Looper.prepare();
+                Handler handler = new Handler();
+                Log.e("aaaa", "子线程中的Log，在loop前");
+                Looper.loop();
+                Log.e("aaaa", "子线程中的Log，在loop后，应该打印不出来了");
+            }
+        }).start();
     }
 
     private void startAndBindService(){
