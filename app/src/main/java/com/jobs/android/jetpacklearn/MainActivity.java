@@ -4,6 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar seekBar;
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
-            btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification;
+            btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme;
 
     private IMyAidlInterface aidl;
     private ServiceConnection connection = new ServiceConnection() {
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btRemoteStudent = findViewById(R.id.bt_remote_student);
         btTaskRecord = findViewById(R.id.bt_task_record);
         btNotification = findViewById(R.id.bt_notification);
+        btScheme = findViewById(R.id.bt_scheme);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btRemoteStudent.setOnClickListener(this);
         btTaskRecord.setOnClickListener(this);
         btNotification.setOnClickListener(this);
+        btScheme.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -386,6 +392,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_notification:
                 intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.bt_scheme:
+                String url = "zeekr://mtime/goodsDetail?id=0010";
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                List list = getPackageManager().queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER);
+                boolean a = list != null && list.size() > 0;
+                List<ResolveInfo> activities = getPackageManager().queryIntentActivities(intent, 0);
+                boolean isValid = !activities.isEmpty();
+                if (a || true) {//这两种方式都不能判断是否有scheme对应的页面
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(this, "没找到scheme对应页面", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
