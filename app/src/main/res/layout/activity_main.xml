@@ -100,6 +100,12 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="Scheme打开外部页面"/>
+            <Button
+                android:id="@+id/bt_scheme2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Scheme打开外部页面2"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
