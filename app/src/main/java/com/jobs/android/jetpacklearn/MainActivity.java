@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +17,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
             btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2;
+    private ImageView ic_anim;
 
     private IMyAidlInterface aidl;
     private ServiceConnection connection = new ServiceConnection() {
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btNotification = findViewById(R.id.bt_notification);
         btScheme = findViewById(R.id.bt_scheme);
         btScheme2 = findViewById(R.id.bt_scheme2);
+        ic_anim = findViewById(R.id.ic_anim);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btNotification.setOnClickListener(this);
         btScheme.setOnClickListener(this);
         btScheme2.setOnClickListener(this);
+        ic_anim.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -351,6 +357,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.bt_add:
                 addData();
+                break;
+            case R.id.ic_anim:
+                AnimatedVectorDrawable drawable = (AnimatedVectorDrawable)getDrawable(R.drawable.common_zeek_loading_anim);
+                ic_anim.setImageDrawable(drawable);
+                drawable.start();
                 break;
             case R.id.bt_query:
                 queryData();

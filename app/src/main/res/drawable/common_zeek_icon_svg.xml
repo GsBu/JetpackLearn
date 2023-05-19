@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100.0"
+    android:viewportHeight="100.0">
+
+    <path
+        android:name="ic_zeek_path"
+        android:strokeColor="#F88650"
+        android:strokeWidth="4.17391"
+        android:pathData="M43.7584,26 H74 V74 H26 V26 H43.7584 V43.7584 L56.2416,56.2416 V74"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="ic_zeek_path_two"
+        android:strokeColor="#EFDBD0"
+        android:strokeWidth="4.17391"
+        android:pathData="M54.1546,74 H26 V26 H74 V74 H56.2416 V56.2416 L43.7584,43.7584 V26"
+        android:trimPathEnd="0"/>
+
+    <path
+        android:name="ic_zeek_path_three"
+        android:strokeColor="#F88650"
+        android:strokeWidth="4.17391"
+        android:pathData="M45.8454,26 H74 V74 H26 V26 H43.7584 V43.7584 L56.2416,56.2416 V74"
+        android:trimPathEnd="0"/>
+</vector>

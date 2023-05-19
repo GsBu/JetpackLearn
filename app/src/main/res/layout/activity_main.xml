@@ -34,6 +34,12 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="add Data"/>
+            <ImageView
+                android:id="@+id/ic_anim"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/common_zeek_loading_anim"
+                android:layout_centerInParent="true"/>
             <Button
                 android:id="@+id/bt_query"
                 android:layout_width="wrap_content"
