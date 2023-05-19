@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
 import com.gs.android.IMyAidlInterface;
-import com.gs.android.aidlserver.MyAidlService;
+
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
 import com.jobs.android.jetpacklearn.leak.LeakActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
@@ -179,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startAndBindService(){
         Log.e("aaaa","startAndBindService");
-        Intent intent = new Intent(MainActivity.this, MyAidlService.class);
-        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        /*Intent intent = new Intent(MainActivity.this, MyAidlService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);*/
     }
 
     private void addData() {

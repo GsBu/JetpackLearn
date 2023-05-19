@@ -1,3 +1,4 @@
 include ':app'
 rootProject.name = "JetpackLearn"
-include ':aidlserver'
+//include ':aidlserver'
+include ':benchmark'

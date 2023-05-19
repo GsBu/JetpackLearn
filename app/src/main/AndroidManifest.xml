@@ -26,7 +26,8 @@
         <activity android:name=".viewmodel.ViewModelActivity" />
         <activity android:name=".livedata.LiveDataTestActivity" />
         <activity android:name=".databinding.DataBindingActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +40,7 @@
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+        <profileable android:shell="true"/>
     </application>
 
 </manifest>
