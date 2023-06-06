@@ -41,6 +41,7 @@ import com.jobs.android.jetpacklearn.room.UserDatabase;
 import com.jobs.android.jetpacklearn.room.UserInfoBean;
 import com.jobs.android.jetpacklearn.server.StudentActivity;
 import com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity;
+import com.jobs.android.jetpacklearn.touch.TouchActivity;
 import com.jobs.android.jetpacklearn.viewmodel.ViewModelActivity;
 
 import org.json.JSONArray;
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar seekBar;
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
-            btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2;
+            btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2,
+            btTouch;
     private ImageView ic_anim;
 
     private IMyAidlInterface aidl;
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btScheme = findViewById(R.id.bt_scheme);
         btScheme2 = findViewById(R.id.bt_scheme2);
         ic_anim = findViewById(R.id.ic_anim);
+        btTouch = findViewById(R.id.bt_touch);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btScheme.setOnClickListener(this);
         btScheme2.setOnClickListener(this);
         ic_anim.setOnClickListener(this);
+        btTouch.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -375,6 +379,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_live_data:
                 intent = new Intent(MainActivity.this, LiveDataTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_touch:
+                intent = new Intent(MainActivity.this, TouchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_view_model:

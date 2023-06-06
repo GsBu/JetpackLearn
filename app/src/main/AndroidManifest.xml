@@ -13,20 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackLearn">
         <activity
-            android:name="com.jobs.android.jetpacklearn.notification.NotificationActivity"
+            android:name=".touch.TouchActivity"
             android:exported="false" />
         <activity
-            android:name="com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity"
+            android:name=".notification.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".taskrecord.TaskRecordActivity"
             android:exported="false"
             android:taskAffinity=":aaaaa" />
         <activity
-            android:name="com.jobs.android.jetpacklearn.server.StudentActivity"
+            android:name=".server.StudentActivity"
             android:exported="false" />
         <activity android:name=".leak.LeakActivity" />
         <activity android:name=".viewmodel.ViewModelActivity" />
         <activity android:name=".livedata.LiveDataTestActivity" />
         <activity android:name=".databinding.DataBindingActivity" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,11 +40,12 @@
         </activity>
 
         <service
-            android:name="com.jobs.android.jetpacklearn.server.StudentService"
+            android:name=".server.StudentService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
-        <profileable android:shell="true"/>
+
+        <profileable android:shell="true" />
     </application>
 
 </manifest>
