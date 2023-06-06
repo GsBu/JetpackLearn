@@ -407,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.bt_scheme:
-                String url = "zeekr_multidisplay://HandrailAndSunshade/HandrailAndSunshadeRear?id=0010&aaa=9999";
+                String url = "zeekr_multidisplay_car_control://HandrailAndSunshade/HandrailAndSunshadeRear?id=0010&aaa=9999";
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 List list = getPackageManager().queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER);
@@ -421,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.bt_scheme2:
-                String url2 = "zeekr_multidisplay://Lamp/LampArmrest?id=0010&aaa=9999";
+                String url2 = "zeekr_multidisplay_car_control://Lamp/LampArmrest?id=0010&aaa=9999";
                 Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url2));
                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent2);
