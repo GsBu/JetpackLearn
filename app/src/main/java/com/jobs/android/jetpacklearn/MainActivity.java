@@ -41,6 +41,7 @@ import com.jobs.android.jetpacklearn.room.UserDatabase;
 import com.jobs.android.jetpacklearn.room.UserInfoBean;
 import com.jobs.android.jetpacklearn.server.StudentActivity;
 import com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity;
+import com.jobs.android.jetpacklearn.thread.ThreadActivity;
 import com.jobs.android.jetpacklearn.touch.TouchActivity;
 import com.jobs.android.jetpacklearn.viewmodel.ViewModelActivity;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
             btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2,
-            btTouch;
+            btTouch, btThread;
     private ImageView ic_anim;
 
     private IMyAidlInterface aidl;
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btScheme2 = findViewById(R.id.bt_scheme2);
         ic_anim = findViewById(R.id.ic_anim);
         btTouch = findViewById(R.id.bt_touch);
+        btThread = findViewById(R.id.bt_thread);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btScheme2.setOnClickListener(this);
         ic_anim.setOnClickListener(this);
         btTouch.setOnClickListener(this);
+        btThread.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -372,6 +375,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_data_binding:
                 intent = new Intent(MainActivity.this, DataBindingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt_thread:
+                intent = new Intent(MainActivity.this, ThreadActivity.class);
                 startActivity(intent);
                 break;
             case R.id.bt_add_observer:

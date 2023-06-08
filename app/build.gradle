@@ -25,7 +25,7 @@ android {
             initWith release
             signingConfig signingConfigs.debug
             matchingFallbacks = ['release']
-            debuggable false
+            debuggable true
         }
     }
     compileOptions {
