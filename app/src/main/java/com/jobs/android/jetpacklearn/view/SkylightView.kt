@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import com.jobs.android.jetpacklearn.util.dp2px
+import java.lang.Exception
 import kotlin.math.abs
 
 
@@ -18,9 +19,9 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     private val mPaint = Paint()        //画分割线的画笔
     private val mSelectPaint = Paint()  //画选中状态的画笔
-    private var mWidth: Int = 0
-    private var mHeight: Int = 0
-    private val mCount = 5
+    private var mWidth: Int = 0         //组件宽度
+    private var mHeight: Int = 0        //组件高度
+    private val mCount = 5              //组件区域个数，2个区域需要1根线
     private val mChildWidth = 68.91f.dp2px().toFloat()//中间区域形状一样，宽度一样
     private val mStartX = 68.44f.dp2px().toFloat()    //第一根线的起始X坐标
     private val mSkewX = 22.53f.dp2px().toFloat()     //倾斜线的X轴偏移量
@@ -38,10 +39,16 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var mTouchSlop = -1         //滑动阈值，防止手指微动导致选中效果切换
 
     private val mPathRoundRect = Path() //圆角矩形path
+    private val mOnePath = Path() //第一个区域path
+    private val mLastPath = Path() //最后一个区域path
 
     constructor(context: Context?) : this(context, null)
 
     init {
+        if(mCount < 2){
+            throw Exception("区域不能小于2个")
+        }
+
         mPaint.color = Color.WHITE
         mPaint.strokeWidth = 2f.dp2px().toFloat()
         mPaint.style = Paint.Style.STROKE
@@ -86,10 +93,13 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
         pathClose.lineTo(mStartX, mStraightStartLength + mSkewY * 2 + mStraightCentreLength)
         pathClose.lineTo(mStartX, mHeight.toFloat())
 
-        var index = 0
         val path = Path()
         path.addPath(pathClose)
 
+        val temporaryOnePath = Path()//为了计算第一个区域的临时path
+        temporaryOnePath.addPath(pathClose)
+        temporaryOnePath.lineTo(mWidth.toFloat(), mHeight.toFloat())
+        temporaryOnePath.lineTo(mWidth.toFloat(), 0f)
 
         pathClose.lineTo(mStartX + mChildWidth, mHeight.toFloat())
         pathClose.lineTo(mStartX + mChildWidth, mHeight.toFloat() - mStraightStartLength)
@@ -109,19 +119,33 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
         pathClose.lineTo(mStartX, 0f)
 
         val globalRegion = Region(-w, -h, w, h)
+        var index = 1
+        //第一个、最后一个区域形状不同，中间才是相同形状的区域。
         while (index < mCount) {
             mAreaList[index].pathWhite.addPath(path)
             mAreaList[index].pathArea.addPath(pathClose)
             mAreaList[index].areaRegion.setPath(pathClose, globalRegion)
-            path.offset(mChildWidth, 0f)
+            path.offset(mChildWidth, 0f)//添加后再移动，最后index < mCount满足时多移动一次
             pathClose.offset(mChildWidth, 0f)
             index++
         }
+
+        mOnePath.op(mPathRoundRect, temporaryOnePath, Path.Op.DIFFERENCE)
+        mAreaList[0].pathArea.addPath(mOnePath)
+        mAreaList[0].areaRegion.setPath(mOnePath, globalRegion)
+
+        val temporaryLastPath = Path()      //为了计算最后一个区域的临时path
+        path.offset(-mChildWidth, 0f)   //path多移动的一次，移回来
+        temporaryLastPath.addPath(path)
+        temporaryLastPath.lineTo(mWidth.toFloat(), mHeight.toFloat())
+        temporaryLastPath.lineTo(mWidth.toFloat(), 0f)
+
+        mLastPath.op(mPathRoundRect, temporaryLastPath, Path.Op.INTERSECT)
+        mAreaList[mAreaList.lastIndex].pathArea.addPath(mLastPath)
+        mAreaList[mAreaList.lastIndex].areaRegion.setPath(mLastPath, globalRegion)
     }
 
     override fun onDraw(canvas: Canvas?) {
-        canvas?.drawPath(mPathRoundRect, mPaint)
-
         for (child in mAreaList) {
             canvas?.drawPath(child.pathWhite, mPaint)
             if (child.isSelected) {
@@ -194,7 +218,7 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
     /**
      * 重置状态
      */
-    private fun resetStatus(){
+    private fun resetStatus() {
         mOldX = -1f
         mDownIndex = -1
         mSlidingMode = false
