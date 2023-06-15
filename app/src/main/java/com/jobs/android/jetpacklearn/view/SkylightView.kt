@@ -14,6 +14,7 @@ import com.jobs.android.jetpacklearn.R
 import com.jobs.android.jetpacklearn.util.DensityUtils
 import java.lang.Exception
 import kotlin.math.abs
+import kotlin.math.min
 
 
 class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
@@ -21,15 +22,15 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     //自定义属性相关
     private val mPaint = Paint()        //画分割线的画笔
     private val mSelectPaint = Paint()  //画选中状态的画笔
-    private val mUnSelectPaint = Paint()  //画未选中状态的画笔
+    private val mUnSelectPaint = Paint()//画未选中状态的画笔
     private var mWidth: Int = 0         //组件宽度
     private var mHeight: Int = 0        //组件高度
     private var mCount = 4              //组件区域个数，2个区域需要1根线
-    private var mChildWidth = 0f//中间区域形状一样，宽度一样
-    private var mStartX = 0f    //第一根线的起始X坐标
-    private var mSkewX = 0f     //倾斜线的X轴偏移量
-    private var mSkewY = 0f     //倾斜线的Y轴偏移量
-    private var mStraightStartLength: Float = 0f      //分割线中的起始直线长度，根据组件高度计算
+    private var mChildWidth = 0f        //中间区域形状一样，宽度一样
+    private var mStartX = 0f            //第一根线的起始X坐标
+    private var mSkewX = 0f             //倾斜线的X轴偏移量
+    private var mSkewY = 0f             //倾斜线的Y轴偏移量
+    private var mStraightStartLength: Float = 0f//分割线中的起始直线长度，根据组件高度计算
     private var mStraightCentreLength = 0f//分割线中的中间直线长度，固定值
     private var mRadius: Float = 0f       //圆角大小
 
@@ -44,8 +45,8 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     //数据相关
     private val mAreaList: ArrayList<SkylightArea> = ArrayList()
     private val mPathRoundRect = Path() //圆角矩形path
-    private val mOnePath = Path() //第一个区域path
-    private val mLastPath = Path() //最后一个区域path
+    private val mOnePath = Path()       //第一个区域path
+    private val mLastPath = Path()      //最后一个区域path
 
     //事件监听
     private var mSkylightListener: SkylightListener? = null
@@ -54,7 +55,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     init {
         if (mCount < 2) {
-            throw Exception("区域不能小于2个")
+            throw Exception("The number of regions cannot be less than 2")
         }
 
         val ats = context.obtainStyledAttributes(
@@ -291,8 +292,21 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mSlidingMode = false
     }
 
-    public fun setSkylightListener(skylightListener: SkylightListener) {
+    fun setSkylightListener(skylightListener: SkylightListener) {
         mSkylightListener = skylightListener
+    }
+
+    /**
+     * 设置初始的选中状态
+     */
+    fun initSelectStatus(areaList: ArrayList<Boolean>){
+        val min = min(areaList.size, mAreaList.size)
+
+        var index = 0
+        while (index < min){
+            mAreaList[index].isSelected = areaList[index]
+            index++
+        }
     }
 }
 

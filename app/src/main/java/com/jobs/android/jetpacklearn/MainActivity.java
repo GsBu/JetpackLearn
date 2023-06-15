@@ -134,6 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btTouch.setOnClickListener(this);
         btThread.setOnClickListener(this);
 
+        ArrayList<Boolean> list = new ArrayList();
+        list.add(true);
+        list.add(false);
+        list.add(true);
+        list.add(false);
+        list.add(true);
+        list.add(true);
+        slvMy.initSelectStatus(list);
         slvMy.setSkylightListener(new SkylightListener() {
             @Override
             public void onSlidingResult(@NonNull ArrayList<SkylightArea> areaList) {

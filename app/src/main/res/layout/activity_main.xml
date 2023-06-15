@@ -124,6 +124,15 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="多线程"/>
+            <com.jobs.android.jetpacklearn.view.SkylightView
+                android:id="@+id/slv_my"
+                android:layout_width="match_parent"
+                android:layout_height="684dp"
+                app:slv_radius="40dp"
+                app:slv_count="5"
+                app:slv_divideWidth="2dp"
+                app:slv_divideColor="#ffffff"
+                android:background="@drawable/ic_launcher_background"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
