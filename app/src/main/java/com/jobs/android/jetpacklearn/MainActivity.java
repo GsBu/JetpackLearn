@@ -22,6 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 
@@ -43,6 +44,8 @@ import com.jobs.android.jetpacklearn.server.StudentActivity;
 import com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity;
 import com.jobs.android.jetpacklearn.thread.ThreadActivity;
 import com.jobs.android.jetpacklearn.touch.TouchActivity;
+import com.jobs.android.jetpacklearn.view.SkylightArea;
+import com.jobs.android.jetpacklearn.view.SkylightListener;
 import com.jobs.android.jetpacklearn.view.SkylightView;
 import com.jobs.android.jetpacklearn.viewmodel.ViewModelActivity;
 
@@ -131,7 +134,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btTouch.setOnClickListener(this);
         btThread.setOnClickListener(this);
 
-        slvMy.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        slvMy.setSkylightListener(new SkylightListener() {
+            @Override
+            public void onSlidingResult(@NonNull ArrayList<SkylightArea> areaList) {
+                for (SkylightArea a : areaList) {
+                    Log.e("wwww", "onSlidingResult id="+a.getId()+" isSelected="+a.isSelected());
+                }
+            }
+
+            @Override
+            public void onClick(int id, boolean isSelected) {
+                Log.e("wwww", "onClick id="+id+" isSelected="+isSelected);
+            }
+
+            @Override
+            public void onSlidingChange(int id, boolean isSelected) {
+                Log.e("wwww", "onSlidingChange id="+id+" isSelected="+isSelected);
+            }
+        });
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
         // 读写该路径下的文件不需要申请储存空间读写权限，且卸载应用时会自动删除。
