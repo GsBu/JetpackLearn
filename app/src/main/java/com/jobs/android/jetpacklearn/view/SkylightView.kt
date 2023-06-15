@@ -203,12 +203,13 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     override fun onDraw(canvas: Canvas?) {
         for (child in mAreaList) {
-            canvas?.drawPath(child.pathWhite, mPaint)
             if (child.isSelected) {
                 canvas?.drawPath(child.pathArea, mSelectPaint)
             } else {
                 canvas?.drawPath(child.pathArea, mUnSelectPaint)
             }
+            //先绘制区域，再绘制分割线，避免分割线被遮到
+            canvas?.drawPath(child.pathWhite, mPaint)
         }
     }
 
