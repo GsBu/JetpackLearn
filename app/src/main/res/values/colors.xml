@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="skylight_select">#1A3A4352</color>
+    <color name="skylight_unselect">#3A4352</color>
 </resources>

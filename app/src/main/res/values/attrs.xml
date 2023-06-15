@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SkylightView">
+        <attr name="slv_radius" format="dimension" />
+        <attr name="slv_skewX" format="dimension" />
+        <attr name="slv_skewY" format="dimension" />
+        <attr name="slv_childWidth" format="dimension" />
+        <attr name="slv_startX" format="dimension" />
+        <attr name="slv_straightCentreLength" format="dimension" />
+        <attr name="slv_count" format="integer" />
+        <attr name="slv_divideWidth" format="dimension" />
+        <attr name="slv_divideColor" format="color" />
+        <attr name="slv_selectColor" format="color" />
+        <attr name="slv_unSelectColor" format="color" />
+    </declare-styleable>
+</resources>

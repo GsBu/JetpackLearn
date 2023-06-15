@@ -10,27 +10,30 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import com.jobs.android.jetpacklearn.R
 import com.jobs.android.jetpacklearn.util.DensityUtils
 import java.lang.Exception
 import kotlin.math.abs
 
 
-class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
+    //自定义属性相关
     private val mPaint = Paint()        //画分割线的画笔
     private val mSelectPaint = Paint()  //画选中状态的画笔
+    private val mUnSelectPaint = Paint()  //画未选中状态的画笔
     private var mWidth: Int = 0         //组件宽度
     private var mHeight: Int = 0        //组件高度
-    private val mCount = 4              //组件区域个数，2个区域需要1根线
-    private val mChildWidth = DensityUtils.dp2px(68.91f).toFloat()//中间区域形状一样，宽度一样
-    private val mStartX = DensityUtils.dp2px(68.44f).toFloat()    //第一根线的起始X坐标
-    private val mSkewX = DensityUtils.dp2px(22.53f).toFloat()     //倾斜线的X轴偏移量
-    private val mSkewY = DensityUtils.dp2px(73.5f).toFloat()      //倾斜线的Y轴偏移量
+    private var mCount = 4              //组件区域个数，2个区域需要1根线
+    private var mChildWidth = 0f//中间区域形状一样，宽度一样
+    private var mStartX = 0f    //第一根线的起始X坐标
+    private var mSkewX = 0f     //倾斜线的X轴偏移量
+    private var mSkewY = 0f     //倾斜线的Y轴偏移量
     private var mStraightStartLength: Float = 0f      //分割线中的起始直线长度，根据组件高度计算
-    private val mStraightCentreLength = DensityUtils.dp2px(150f).toFloat()//分割线中的中间直线长度，固定值
-    private val mRadius = DensityUtils.dp2px(80f).toFloat()       //圆角大小
-    private val mAreaList: ArrayList<SkylightArea> = ArrayList()
+    private var mStraightCentreLength = 0f//分割线中的中间直线长度，固定值
+    private var mRadius: Float = 0f       //圆角大小
 
+    //触控相关
     private var mOldX = -1f
     private var mDownIndex = -1         //点击时触控的区域的索引
     private var mDownIndexSelect = false//点击时触控的区域的选中状态。此处报存是因为目前点击时默认都是选中的，后面抬手时要重设状态
@@ -38,28 +41,79 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var mIsRightSlide = false   //是否右滑
     private var mTouchSlop = -1         //滑动阈值，防止手指微动导致选中效果切换
 
+    //数据相关
+    private val mAreaList: ArrayList<SkylightArea> = ArrayList()
     private val mPathRoundRect = Path() //圆角矩形path
     private val mOnePath = Path() //第一个区域path
     private val mLastPath = Path() //最后一个区域path
 
+    //事件监听
     private var mSkylightListener: SkylightListener? = null
 
-    constructor(context: Context?) : this(context, null)
+    constructor(context: Context) : this(context, null)
 
     init {
-        if(mCount < 2){
+        if (mCount < 2) {
             throw Exception("区域不能小于2个")
         }
 
-        mPaint.color = Color.WHITE
-        mPaint.strokeWidth = DensityUtils.dp2px(2f).toFloat()
+        val ats = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.SkylightView
+        )
+
+        mRadius = ats.getDimension(
+            R.styleable.SkylightView_slv_radius,
+            DensityUtils.dp2px(80f).toFloat()
+        )
+        mSkewX = ats.getDimension(
+            R.styleable.SkylightView_slv_skewX,
+            DensityUtils.dp2px(22.53f).toFloat()
+        )
+        mSkewY = ats.getDimension(
+            R.styleable.SkylightView_slv_skewY,
+            DensityUtils.dp2px(73.5f).toFloat()
+        )
+        mStartX = ats.getDimension(
+            R.styleable.SkylightView_slv_startX,
+            DensityUtils.dp2px(68.44f).toFloat()
+        )
+        mChildWidth = ats.getDimension(
+            R.styleable.SkylightView_slv_childWidth,
+            DensityUtils.dp2px(68.91f).toFloat()
+        )
+        mStraightCentreLength = ats.getDimension(
+            R.styleable.SkylightView_slv_straightCentreLength,
+            DensityUtils.dp2px(150f).toFloat()
+        )
+        mCount = ats.getInteger(R.styleable.SkylightView_slv_count, 4)
+
+        mPaint.color = ats.getColor(
+            R.styleable.SkylightView_slv_divideColor,
+            Color.WHITE
+        )
+        mPaint.strokeWidth = ats.getDimension(
+            R.styleable.SkylightView_slv_divideWidth,
+            DensityUtils.dp2px(2f).toFloat()
+        )
         mPaint.style = Paint.Style.STROKE
         mPaint.isAntiAlias = true
 
-        mSelectPaint.color = Color.GREEN
+        mSelectPaint.color = ats.getColor(
+            R.styleable.SkylightView_slv_selectColor,
+            context.resources.getColor(R.color.skylight_select)
+        )
         mSelectPaint.strokeWidth = DensityUtils.dp2px(1f).toFloat()
         mSelectPaint.style = Paint.Style.FILL
         mSelectPaint.isAntiAlias = true
+
+        mUnSelectPaint.color = ats.getColor(
+            R.styleable.SkylightView_slv_unSelectColor,
+            context.resources.getColor(R.color.skylight_unselect)
+        )
+        mUnSelectPaint.strokeWidth = DensityUtils.dp2px(1f).toFloat()
+        mUnSelectPaint.style = Paint.Style.FILL
+        mUnSelectPaint.isAntiAlias = true
 
         var index = 0
         while (index < mCount) {
@@ -152,6 +206,8 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
             canvas?.drawPath(child.pathWhite, mPaint)
             if (child.isSelected) {
                 canvas?.drawPath(child.pathArea, mSelectPaint)
+            } else {
+                canvas?.drawPath(child.pathArea, mUnSelectPaint)
             }
         }
     }
@@ -182,7 +238,7 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
                             }
 
                             if (mSlidingMode) {
-                                if(child.isSelected != mIsRightSlide) {
+                                if (child.isSelected != mIsRightSlide) {
                                     child.isSelected = mIsRightSlide
                                     mSkylightListener?.onSlidingChange(child.id, child.isSelected)
                                     invalidate()
@@ -206,7 +262,7 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     if (child.areaRegion.contains(event.x.toInt(), event.y.toInt())) {
                         if (mSlidingMode) {//判定是滑动
                             mSkylightListener?.onSlidingResult(mAreaList)
-                        }else{//判定是点击
+                        } else {//判定是点击
                             child.isSelected = !mDownIndexSelect
                             mSkylightListener?.onClick(child.id, child.isSelected)
                             invalidate()
@@ -234,7 +290,7 @@ class SkylightView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mSlidingMode = false
     }
 
-    public fun setSkylightListener(skylightListener: SkylightListener){
+    public fun setSkylightListener(skylightListener: SkylightListener) {
         mSkylightListener = skylightListener
     }
 }
@@ -245,7 +301,7 @@ class SkylightArea(val id: Int, var isSelected: Boolean) {
     val areaRegion: Region = Region()   //分割线组成的区域Path的触控范围
 }
 
-interface SkylightListener{
+interface SkylightListener {
     /**
      * 点击区域
      * @param id 点击的区域id
