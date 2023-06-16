@@ -116,6 +116,8 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mUnSelectPaint.style = Paint.Style.FILL
         mUnSelectPaint.isAntiAlias = true
 
+        ats.recycle()
+
         var index = 0
         while (index < mCount) {
             mAreaList.add(SkylightArea(index, false))
@@ -215,6 +217,8 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        //测试时使用，避免滑动冲突
+        //parent.requestDisallowInterceptTouchEvent(true)
         when (event?.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 for (child in mAreaList) {
