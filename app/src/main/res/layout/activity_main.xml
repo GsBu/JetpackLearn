@@ -128,7 +128,7 @@
                 android:id="@+id/slv_my"
                 android:layout_width="match_parent"
                 android:layout_height="684dp"
-                app:slv_radius="40dp"
+                app:slv_radius="80dp"
                 app:slv_count="5"
                 app:slv_divideWidth="2dp"
                 app:slv_divideColor="#ffffff"

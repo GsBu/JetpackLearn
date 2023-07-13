@@ -200,6 +200,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         temporaryLastPath.lineTo(mWidth.toFloat(), 0f)
 
         mLastPath.op(mPathRoundRect, temporaryLastPath, Path.Op.INTERSECT)
+        mAreaList[mAreaList.lastIndex].pathArea.reset()
         mAreaList[mAreaList.lastIndex].pathArea.addPath(mLastPath)
         mAreaList[mAreaList.lastIndex].areaRegion.setPath(mLastPath, globalRegion)
     }
