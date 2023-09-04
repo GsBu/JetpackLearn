@@ -12,5 +12,9 @@
         <attr name="slv_divideColor" format="color" />
         <attr name="slv_selectColor" format="color" />
         <attr name="slv_unSelectColor" format="color" />
+        <attr name="slv_orientation" format="enum" >
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

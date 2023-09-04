@@ -3,6 +3,7 @@ package com.jobs.android.jetpacklearn.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Region
@@ -12,7 +13,6 @@ import android.view.View
 import android.view.ViewConfiguration
 import com.jobs.android.jetpacklearn.R
 import com.jobs.android.jetpacklearn.util.DensityUtils
-import java.lang.Exception
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -47,6 +47,12 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     private val mPathRoundRect = Path() //圆角矩形path
     private val mOnePath = Path()       //第一个区域path
     private val mLastPath = Path()      //最后一个区域path
+
+    //方向相关
+    private val HORIZONTAL = 0          //水平方向
+    private val VERTICAL = 1            //垂直方向
+    private val mMatrix = Matrix()      //矩阵，用于旋转Path
+    private var mOrientation = HORIZONTAL//默认水平方向
 
     //事件监听
     private var mSkylightListener: SkylightListener? = null
@@ -116,6 +122,11 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mUnSelectPaint.style = Paint.Style.FILL
         mUnSelectPaint.isAntiAlias = true
 
+        mOrientation = ats.getInteger(
+            R.styleable.SkylightView_slv_orientation,
+            HORIZONTAL
+        )
+
         ats.recycle()
 
         var index = 0
@@ -143,6 +154,8 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
             mRadius,
             Path.Direction.CW
         )
+
+        mMatrix.setRotate(90f, mWidth / 2f, mHeight / 2f)
 
         val pathClose = Path()
         pathClose.moveTo(mStartX, 0f)
@@ -203,6 +216,14 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mAreaList[mAreaList.lastIndex].pathArea.reset()
         mAreaList[mAreaList.lastIndex].pathArea.addPath(mLastPath)
         mAreaList[mAreaList.lastIndex].areaRegion.setPath(mLastPath, globalRegion)
+
+        if (mOrientation == VERTICAL) {
+            for (child in mAreaList) {
+                child.pathWhite.transform(mMatrix)
+                child.pathArea.transform(mMatrix)
+                child.areaRegion.setPath(child.pathArea, globalRegion)
+            }
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -304,11 +325,11 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     /**
      * 设置初始的选中状态
      */
-    fun initSelectStatus(areaList: ArrayList<Boolean>){
+    fun initSelectStatus(areaList: ArrayList<Boolean>) {
         val min = min(areaList.size, mAreaList.size)
 
         var index = 0
-        while (index < min){
+        while (index < min) {
             mAreaList[index].isSelected = areaList[index]
             index++
         }
