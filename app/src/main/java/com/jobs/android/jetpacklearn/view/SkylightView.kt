@@ -36,6 +36,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     //触控相关
     private var mOldX = -1f
+    private var mOldY = -1f
     private var mDownIndex = -1         //点击时触控的区域的索引
     private var mDownIndexSelect = false//点击时触控的区域的选中状态。此处报存是因为目前点击时默认都是选中的，后面抬手时要重设状态
     private var mSlidingMode = false    //是否进入了滑动模式
@@ -53,6 +54,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     private val VERTICAL = 1            //垂直方向
     private val mMatrix = Matrix()      //矩阵，用于旋转Path
     private var mOrientation = HORIZONTAL//默认水平方向
+    private var mIsVertical = false     //是否是垂直方向
 
     //事件监听
     private var mSkylightListener: SkylightListener? = null
@@ -218,6 +220,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mAreaList[mAreaList.lastIndex].areaRegion.setPath(mLastPath, globalRegion)
 
         if (mOrientation == VERTICAL) {
+            mIsVertical = true
             for (child in mAreaList) {
                 child.pathWhite.transform(mMatrix)
                 child.pathArea.transform(mMatrix)
@@ -255,9 +258,18 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
             }
 
             MotionEvent.ACTION_MOVE -> {
-                if (abs(event.x - mOldX) > mTouchSlop) {
+                var moveDistance = if(mIsVertical){
+                    abs(event.y - mOldY)
+                }else{
+                    abs(event.x - mOldX)
+                }
+                if (moveDistance > mTouchSlop) {
                     if (mSlidingMode) {
-                        mIsRightSlide = event.x > mOldX
+                        if(mIsVertical) {
+                            mIsRightSlide = event.y > mOldY
+                        } else {
+                            mIsRightSlide = event.x > mOldX
+                        }
                     }
                     for (child in mAreaList) {
                         if (child.areaRegion.contains(event.x.toInt(), event.y.toInt())) {
@@ -282,6 +294,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
                         }
                     }
                     mOldX = event.x
+                    mOldY = event.y
                 }
             }
 
@@ -314,6 +327,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
      */
     private fun resetStatus() {
         mOldX = -1f
+        mOldY = -1f
         mDownIndex = -1
         mSlidingMode = false
     }
