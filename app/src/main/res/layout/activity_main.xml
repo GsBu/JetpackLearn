@@ -124,17 +124,12 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="多线程"/>
-            <com.jobs.android.jetpacklearn.view.SkylightView
-                android:id="@+id/slv_my"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="10dp"
-                app:slv_orientation="vertical"
-                app:slv_radius="80dp"
-                app:slv_count="5"
-                app:slv_divideWidth="2dp"
-                app:slv_divideColor="#ffffff"
-                android:background="@drawable/ic_launcher_background"/>
+            <Button
+                android:id="@+id/bt_skylight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="自定义控件"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

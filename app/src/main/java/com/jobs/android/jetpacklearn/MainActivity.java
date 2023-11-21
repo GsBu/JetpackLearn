@@ -29,6 +29,8 @@ import androidx.lifecycle.Lifecycle;
 import com.gs.android.IMyAidlInterface;
 
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
+import com.jobs.android.jetpacklearn.di.bean.Computer;
+import com.jobs.android.jetpacklearn.di.bean.Truck;
 import com.jobs.android.jetpacklearn.leak.LeakActivity;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserver;
 import com.jobs.android.jetpacklearn.lifecycle.MyLifecycleObserverAndOwner;
@@ -41,6 +43,7 @@ import com.jobs.android.jetpacklearn.room.UserAndLibrary;
 import com.jobs.android.jetpacklearn.room.UserDatabase;
 import com.jobs.android.jetpacklearn.room.UserInfoBean;
 import com.jobs.android.jetpacklearn.server.StudentActivity;
+import com.jobs.android.jetpacklearn.skylight.SkylightViewActivity;
 import com.jobs.android.jetpacklearn.taskrecord.TaskRecordActivity;
 import com.jobs.android.jetpacklearn.thread.ThreadActivity;
 import com.jobs.android.jetpacklearn.touch.TouchActivity;
@@ -72,9 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
             btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2,
-            btTouch, btThread;
+            btTouch, btThread, btSkylightView;
     private ImageView ic_anim;
-    private SkylightView slvMy;
 
     private IMyAidlInterface aidl;
     private ServiceConnection connection = new ServiceConnection() {
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ic_anim = findViewById(R.id.ic_anim);
         btTouch = findViewById(R.id.bt_touch);
         btThread = findViewById(R.id.bt_thread);
-        slvMy = findViewById(R.id.slv_my);
+        btSkylightView = findViewById(R.id.bt_skylight);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -133,33 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ic_anim.setOnClickListener(this);
         btTouch.setOnClickListener(this);
         btThread.setOnClickListener(this);
+        btSkylightView.setOnClickListener(this);
 
-        ArrayList<Boolean> list = new ArrayList();
-        list.add(true);
-        list.add(false);
-        list.add(true);
-        list.add(false);
-        list.add(true);
-        list.add(true);
-        slvMy.initSelectStatus(list);
-        slvMy.setSkylightListener(new SkylightListener() {
-            @Override
-            public void onSlidingResult(@NonNull ArrayList<SkylightArea> areaList) {
-                for (SkylightArea a : areaList) {
-                    Log.e("wwww", "onSlidingResult id="+a.getId()+" isSelected="+a.isSelected());
-                }
-            }
-
-            @Override
-            public void onClick(int id, boolean isSelected) {
-                Log.e("wwww", "onClick id="+id+" isSelected="+isSelected);
-            }
-
-            @Override
-            public void onSlidingChange(int id, boolean isSelected) {
-                Log.e("wwww", "onSlidingChange id="+id+" isSelected="+isSelected);
-            }
-        });
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
         // 读写该路径下的文件不需要申请储存空间读写权限，且卸载应用时会自动删除。
@@ -220,6 +197,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("aaaa", "子线程中的Log，在loop后，应该打印不出来了");
             }
         }).start();
+
+        Computer c1 = new Computer();
+        Truck truck = new Truck();
+        truck.addCargo(c1);
+        truck.deliver();
     }
 
     private void startAndBindService(){
@@ -453,8 +435,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.bt_skylight:
+                intent = new Intent(MainActivity.this, SkylightViewActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_scheme:
-                String url = "zeekr_multidisplay_car_control://HandrailAndSunshade/HandrailAndSunshadeRear?id=0010&aaa=9999";
+                String url = "zeekr_multidisplay_car_control://Lamp/LampArmrest?carType=3";
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 List list = getPackageManager().queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER);
@@ -468,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.bt_scheme2:
-                String url2 = "zeekr_multidisplay_car_control://Lamp/LampArmrest?id=0010&aaa=9999";
+                String url2 = "zeekr_multidisplay_car_control://Lamp/LampArmrest?carType=2";
                 Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url2));
                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent2);
