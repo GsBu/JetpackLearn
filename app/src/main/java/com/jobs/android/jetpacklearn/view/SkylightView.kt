@@ -1,5 +1,8 @@
 package com.jobs.android.jetpacklearn.view
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -8,10 +11,12 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Region
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.animation.LinearInterpolator
 import com.jobs.android.jetpacklearn.R
 import com.jobs.android.jetpacklearn.util.DensityUtils
 import kotlin.math.abs
@@ -23,8 +28,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     //自定义属性相关
     private val mPaint = Paint()        //画分割线的画笔
-    private val mSelectPaint = Paint()  //画选中状态的画笔
-    private val mUnSelectPaint = Paint()//画未选中状态的画笔
+    private val mRegionPaint = Paint()  //画不规则区域的画笔
     private var mWidth: Int = 0         //组件宽度
     private var mHeight: Int = 0        //组件高度
     private var mCount = 4              //组件区域个数，2个区域需要1根线
@@ -36,6 +40,8 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
     private var mStraightCentreLength = 0f//分割线中的中间直线长度，固定值
     private var mRadius: Float = 0f     //圆角大小
     private var mIsPX: Boolean = false  //是否是px，默认是dp
+    private var mSelectColor: Int = 0   //选中时的颜色
+    private var mUnSelectColor: Int = 0 //未选中时的颜色
 
     //触控相关
     private var mOldX = -1f
@@ -118,21 +124,19 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
         mPaint.style = Paint.Style.STROKE
         mPaint.isAntiAlias = true
 
-        mSelectPaint.color = ats.getColor(
+        mSelectColor = ats.getColor(
             R.styleable.SkylightView_slv_selectColor,
             context.resources.getColor(R.color.skylight_select)
         )
-        mSelectPaint.strokeWidth = dp2px(1f).toFloat()
-        mSelectPaint.style = Paint.Style.FILL
-        mSelectPaint.isAntiAlias = true
 
-        mUnSelectPaint.color = ats.getColor(
+        mUnSelectColor = ats.getColor(
             R.styleable.SkylightView_slv_unSelectColor,
             context.resources.getColor(R.color.skylight_unselect)
         )
-        mUnSelectPaint.strokeWidth = dp2px(1f).toFloat()
-        mUnSelectPaint.style = Paint.Style.FILL
-        mUnSelectPaint.isAntiAlias = true
+
+        mRegionPaint.strokeWidth = dp2px(1f).toFloat()
+        mRegionPaint.style = Paint.Style.FILL
+        mRegionPaint.isAntiAlias = true
 
         mOrientation = ats.getInteger(
             R.styleable.SkylightView_slv_orientation,
@@ -289,11 +293,18 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     override fun onDraw(canvas: Canvas?) {
         for (child in mAreaList) {
-            if (child.isSelected) {
-                canvas?.drawPath(child.pathArea, mSelectPaint)
+            //Log.e("aaaa","${child.id} ${child.currentColor}")
+            if(child.currentColor == Int.MIN_VALUE) {
+                if (child.isSelected) {
+                    mRegionPaint.color = mSelectColor
+                } else {
+                    mRegionPaint.color = mUnSelectColor
+                }
             } else {
-                canvas?.drawPath(child.pathArea, mUnSelectPaint)
+                mRegionPaint.color = child.currentColor
             }
+
+            canvas?.drawPath(child.pathArea, mRegionPaint)
             //先绘制区域，再绘制分割线，避免分割线被遮到
             canvas?.drawPath(child.pathWhite, mPaint)
         }
@@ -346,19 +357,19 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
                                 if (child.isSelected != mIsRightSlide) {
                                     child.isSelected = mIsRightSlide
                                     mSkylightListener?.onSlidingChange(child.id, child.isSelected)
-                                    invalidate()
+                                    startAnimator(child)
                                 }
                                 //解决点击后左滑，取消原来点击区域的选中状态
                                 if (mDownIndex == child.id + 1 && !mIsRightSlide) {
                                     mAreaList[mDownIndex].isSelected = false
                                     mSkylightListener?.onSlidingChange(mDownIndex, false)
-                                    invalidate()
+                                    startAnimator(mAreaList[mDownIndex])
                                 }
                                 //解决点击后右滑，增加原来点击区域的选中状态
                                 if (mDownIndex == child.id - 1 && mIsRightSlide) {
                                     mAreaList[mDownIndex].isSelected = true
                                     mSkylightListener?.onSlidingChange(mDownIndex, false)
-                                    invalidate()
+                                    startAnimator(mAreaList[mDownIndex])
                                 }
                             }
                         } else {
@@ -370,7 +381,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
                                 ) {
                                     child.isSelected = mAreaList[mNewIndex].isSelected
                                     mSkylightListener?.onSlidingChange(child.id, child.isSelected)
-                                    invalidate()
+                                    startAnimator(child)
                                 }
                             }
                         }
@@ -391,7 +402,7 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
                         } else {//判定是点击
                             child.isSelected = !mDownIndexSelect
                             mSkylightListener?.onClick(child.id, child.isSelected)
-                            invalidate()
+                            startAnimator(child)
                         }
                         break
                     }
@@ -454,12 +465,47 @@ class SkylightView(context: Context, attrs: AttributeSet?) : View(context, attrs
             ).toInt()
         }
     }
+
+    private fun startAnimator(child: SkylightArea){
+        if(child.isSelected){
+            child.updateAnimator(mUnSelectColor, mSelectColor)
+        }else{
+            child.updateAnimator(mSelectColor, mUnSelectColor)
+        }
+        child.mValueAnimator?.addUpdateListener { animation ->
+            invalidate()
+        }
+        child.mValueAnimator?.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                invalidate()
+            }
+        })
+        child.mValueAnimator?.start()
+    }
 }
 
 class SkylightArea(val id: Int, var isSelected: Boolean) {
     val pathWhite: Path = Path()        //分割线的Path
     val pathArea: Path = Path()         //分割线组成的区域Path
     val areaRegion: Region = Region()   //分割线组成的区域Path的触控范围
+    var currentColor: Int = Int.MIN_VALUE           //区域当前颜色值，动画效果需要记录颜色值
+    var mValueAnimator: ValueAnimator? = null
+
+    fun updateAnimator(old: Int, target: Int) {
+        mValueAnimator = ValueAnimator.ofArgb(old, target)
+        mValueAnimator?.duration = 500L
+        mValueAnimator?.addUpdateListener { animation ->
+            val value = animation.animatedValue.toString().toInt()
+            Log.e("aaaa","${animation.animatedValue} $value")
+            currentColor = value
+        }
+        mValueAnimator?.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                currentColor = Int.MIN_VALUE
+            }
+        })
+        mValueAnimator?.interpolator = LinearInterpolator()
+    }
 }
 
 interface SkylightListener {
