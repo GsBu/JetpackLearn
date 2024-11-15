@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackLearn">
         <activity
+            android:name=".coroutine.CoroutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".skylight.SkylightViewActivity"
             android:exported="false" />
         <activity

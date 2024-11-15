@@ -28,6 +28,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.gs.android.IMyAidlInterface;
 
+import com.jobs.android.jetpacklearn.coroutine.CoroutineActivity;
 import com.jobs.android.jetpacklearn.databinding.DataBindingActivity;
 import com.jobs.android.jetpacklearn.di.bean.Computer;
 import com.jobs.android.jetpacklearn.di.bean.Truck;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFilePath;
     private Button bt1, btAdd, btQuery, btDataBinding, btAddObserver, btLiveData, btViewModel,
             btLeak, btRemote, btRemoteStudent, btTaskRecord, btNotification, btScheme, btScheme2,
-            btTouch, btThread, btSkylightView;
+            btTouch, btThread, btSkylightView, btCoroutine;
     private ImageView ic_anim;
 
     private IMyAidlInterface aidl;
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btTouch = findViewById(R.id.bt_touch);
         btThread = findViewById(R.id.bt_thread);
         btSkylightView = findViewById(R.id.bt_skylight);
+        btCoroutine = findViewById(R.id.bt_coroutine);
         btAdd.setOnClickListener(this);
         btQuery.setOnClickListener(this);
         btDataBinding.setOnClickListener(this);
@@ -136,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btTouch.setOnClickListener(this);
         btThread.setOnClickListener(this);
         btSkylightView.setOnClickListener(this);
+        btCoroutine.setOnClickListener(this);
 
         StringBuffer stringBuffer = new StringBuffer();
         // 内部储存：/data 目录。一般我们使用getFilesDir() 或 getCacheDir() 方法获取本应用的内部储存路径，
@@ -376,6 +379,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()){
+            case R.id.bt_coroutine:
+                intent = new Intent(MainActivity.this, CoroutineActivity.class);
+                startActivity(intent);
+                break;
             case R.id.bt_add:
                 addData();
                 break;
